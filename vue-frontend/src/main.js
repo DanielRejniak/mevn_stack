@@ -11,12 +11,12 @@ Vue.config.productionTip = false
 
 let app
 let config = {
-  apiKey: 'AIzaSyC8gPcYyQn_otdgFoHgzJS45FFlsHfV0yg',
-  authDomain: 'test-project-e0286.firebaseapp.com',
-  databaseURL: 'https://test-project-e0286.firebaseio.com',
-  projectId: 'test-project-e0286',
-  storageBucket: 'test-project-e0286.appspot.com',
-  messagingSenderId: '404909952400'
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: ''
 }
 
 firebase.initializeApp(config)
