@@ -8,7 +8,7 @@ var admin = require('firebase-admin');
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-var serviceAccount = require('./src/firebase-service-file/test-project-e0286-firebase-adminsdk-jz8h5-0ee90b6240.json');
+var serviceAccount = require('./src/firebase-service-file.json');
 
 //Initialize Firebase Service Account
 admin.initializeApp({

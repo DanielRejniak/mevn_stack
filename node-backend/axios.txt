@@ -1,0 +1,15 @@
+created () {
+    firebase.auth().currentUser.getIdToken(true).then(function (idToken) {
+      axios.post(`http://localhost:3000/public/check`, {
+        idToken: idToken
+      })
+        .then(response => {
+          console.log(response.uid)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+    }).catch(function (error) {
+      console.log(error)
+    })
+  }

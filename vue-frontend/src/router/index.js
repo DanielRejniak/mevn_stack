@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+
+import Hello from '@/components/Hello'
 import Login from '@/components/Login'
-import Register from '@/components/Register'
+import SignUp from '@/components/SignUp'
+import Homepage from '@/components/Homepage'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -11,11 +13,11 @@ let router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/login'
+      redirect: '/homepage'
     },
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/homepage'
     },
     {
       path: '/login',
@@ -23,26 +25,31 @@ let router = new Router({
       component: Login
     },
     {
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUp
+    },
+    {
+      path: '/homepage',
+      name: 'Homepage',
+      component: Homepage
+    },
+    {
       path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      name: 'Hello',
+      component: Hello,
       meta: {
         requiresAuth: true
       }
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  let currentUser = firebase.auth().currentUser
-  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  let currentUser = firebase.auth().currentUser;
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login')
+  if (requiresAuth && !currentUser) next('homepage')
   else if (!requiresAuth && currentUser) next('hello')
   else next()
 })

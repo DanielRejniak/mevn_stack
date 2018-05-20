@@ -4,8 +4,7 @@ var admin = require('firebase-admin');
 module.exports =  (req,res,next) => {
     idToken = req.body.firebaseToken
     admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
-        var uid = decodedToken.uid;
-        req.uid = uid;
+        req.token = decodedToken;
         next()
     }).catch(function(error) {
         res.status(403).json({
