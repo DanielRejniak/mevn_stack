@@ -36,20 +36,15 @@
         <section class="hero">
         <div class="hero-body">
           <div class="container">
-            <div class="columns is-vcentered">
-              <section class="hero is-info welcome is-small">
-                    <div class="hero-body">
-                        <div class="container">
-                            <h1 class="title">
-                                Hey, Good To See You.
-                            </h1>
-                            <h2 class="subtitle">
-                                Let's Explore!
-                            </h2>
-                        </div>
-                    </div>
-</section>
-          </div>
+          <div class="notification is-info">
+  <button class="delete"></button>
+  Primar lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+  consectetur adipiscing elit
+</div>
+<br>
+{{current_email}}
+          
           </div>
         </div>
       </section>
@@ -78,7 +73,7 @@ export default {
   created() {
     var self = this;
     firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-      axios.post(`http://localhost:3000/private`, {
+      axios.post(`http://localhost:3000/private/events`, {
         firebaseToken: idToken
       })
       .then(response => {

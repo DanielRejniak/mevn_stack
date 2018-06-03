@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  node-backend:
+    build: node-backend
+    ports:
+      - "3000:3000"
+  
+  vue-frontend:
+    build: vue-frontend
+    ports:
+      - "8000:8000"
