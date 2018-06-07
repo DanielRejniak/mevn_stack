@@ -5,6 +5,7 @@ import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Homepage from '@/components/Homepage'
+import About from '@/components/About'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -33,6 +34,11 @@ let router = new Router({
       path: '/homepage',
       name: 'Homepage',
       component: Homepage
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     },
     {
       path: '/hello',

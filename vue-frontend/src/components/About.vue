@@ -1,12 +1,8 @@
 <template>
   <div class="hello">
-    
-    <!-- Hero Section -->
-      <section class="hero is-fullheight is-default is-bold">
-        <div class="hero-head">
-            <br>
-            <div class="container">
-            <nav class="navbar is-transparent">
+    <div class="container">
+      <br>
+    <nav class="navbar is-transparent">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="https://bulma.io">
                         <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
@@ -23,7 +19,7 @@
                         <a class="navbar-item is-active" href="#/homepage">
                             Home
                         </a>
-                        <a class="navbar-item" href="#/about">
+                        <a class="navbar-item is-active" href="#/about">
                             About
                         </a>
                     </div>
@@ -49,33 +45,7 @@
                     </div>
                 </div>
             </nav>
-            </div>
-            
-
-
-          </div>
-            <div class="hero-body">
-              <div class="container has-text-centered">
-                <div class="columns is-vcentered">
-                  <div class="column is-5">
-                    <figure class="image is-4by3">
-                      <img src="https://picsum.photos/800/600/?random" alt="Description">
-                    </figure>
-                  </div>
-                  <div class="column is-6 is-offset-1">
-                    <h1 class="title is-2">Superhero Scaffolding</h1>
-                    <h2 class="subtitle is-4">Let this cover page describe a product or service.</h2>
-                    <br>
-                    <p class="has-text-centered">
-                      <a class="button is-medium is-info is-rounded">
-                        Learn more
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section> <!-- Herp Section End -->
+    </div>
   </div>
 </template>
 
