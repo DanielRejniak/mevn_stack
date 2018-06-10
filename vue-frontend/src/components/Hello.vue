@@ -1,4 +1,5 @@
 <template>
+<div class="app">
   <div class="container">
     <br>
     <nav class="navbar is-transparent">
@@ -34,19 +35,104 @@
               </div>
             </nav>
         <section class="hero">
-        <div class="hero-body">
           <div class="container">
-          <div class="notification is-info">
-  <button class="delete"></button>
-  Welcome to your dashboard
-</div>
-<br>
-
-          
-          </div>
-        </div>
-      </section>
+            <br>
+            <div class="notification is-primary">
+              <div class="field-body">
+    <div class="field">
+      <div class="select is-fullwidth">
+                  <select>
+                    <option>Location</option>
+                    <option>With options</option>
+                  </select>
+                </div>
     </div>
+    <div class="field">
+      <div class="select is-fullwidth">
+                  <select>
+                    <option>Discipline</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+    </div>
+    <div class="field">
+      <div class="select is-fullwidth">
+                  <select>
+                    <option>Affiliation</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+    </div>
+    <div class="field">
+      <div class="select is-fullwidth">
+                  <select>
+                    <option>Date</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+    </div>
+  </div>
+            </div>
+
+            <hr>
+            <div class="notification is-info">
+              4 Events Available
+            </div>
+            <br>
+
+            <div class="columns is-multiline">
+            <div class="column is-one-third" v-for="card in cards">
+              <div class="card">
+                <header class="card-header">
+                  <p class="card-header-title">
+                    {{card.county}} | {{card.town}}
+                  </p>
+                </header>
+                <div class="card-content">
+                  <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.  
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                    
+                  </div>
+                </div>
+                <footer class="card-footer">
+                  <a href="#" class="card-footer-item">View</a>
+                  <a href="#" class="card-footer-item">Favourite</a>
+                </footer>
+              </div>
+            </div>
+
+            </div>
+
+            
+
+          </div>
+      </section>
+      <br>
+      <section class="prgination">
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+  <ul class="pagination-list">
+    <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+    <li><a class="pagination-link" aria-label="Goto page 2">2</a></li>
+  </ul>
+</nav>
+        </section>
+        <br>
+        
+    </div>
+    <footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+</div>
+    
 </template>
 
 <script>
@@ -58,7 +144,45 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      current_email: ''
+      current_email: '',
+      cards: [
+        {
+          county: 'Dublin',
+          town: 'Malahide'
+        },
+        {
+          county: 'Mayo',
+          town: 'Ballina'
+        },
+        {
+          county: 'Louth',
+          town: 'Drogheda'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        },
+        {
+          county: 'Dublin',
+          town: 'Swords'
+        }
+      ]
     }
   },
   methods: {
