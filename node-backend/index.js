@@ -3,6 +3,8 @@ const app = express()
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 var admin = require('firebase-admin');
+const mongoose = require('mongoose');
+const use_database = false;
 
 //Configurations
 app.use(morgan("dev"));
@@ -29,6 +31,21 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+//Setup Database URL
+const dbHost = 'mongodb://database/mevn-app';
+
+// Connect to mongodb
+if(use_database) {
+    mongoose.connect(dbHost, function(err) {
+        if(err) {
+            console.log('Database Not Connected!');
+        } else {
+            console.log('Database Connected');
+        }
+    });
+}
+
 
 const privateRoutes = require('./src/routes/private');
 const publicRoutes = require('./src/routes/public');

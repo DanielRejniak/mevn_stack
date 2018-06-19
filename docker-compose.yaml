@@ -10,3 +10,8 @@ services:
     build: vue-frontend
     ports:
       - "8000:8000"
+
+  database:
+    image: mongo:latest
+    ports:
+    - "27017:27017"
