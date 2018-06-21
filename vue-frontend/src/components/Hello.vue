@@ -1,6 +1,7 @@
 <template>
 <div class="app">
   <div class="container">
+        <Navbar></Navbar>
         <section class="hero">
           <div class="container">
           
@@ -26,9 +27,13 @@
 <script>
 import firebase from 'firebase';
 import axios from 'axios';
+import Navbar from './Navbar'
 
 export default {
   name: 'hello',
+  components: {
+      'Navbar': Navbar
+    },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',

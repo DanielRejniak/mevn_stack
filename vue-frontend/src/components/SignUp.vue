@@ -1,5 +1,6 @@
 <template>
   <section class="hero is-fullheight is-default is-bold">
+        <Navbar></Navbar>
         <div class="hero-body">
           <div class="container has-text-centered">
                 <h1 class="subtitle is-1">Register</h1>
@@ -40,9 +41,13 @@
 
 <script>
   import firebase from 'firebase'
+  import Navbar from './Navbar'
 
   export default {
     name: 'signUp',
+    components: {
+      'Navbar': Navbar
+    },
     data: function() {
       return {
         email: '',

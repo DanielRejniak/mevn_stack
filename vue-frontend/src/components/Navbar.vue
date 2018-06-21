@@ -28,14 +28,14 @@
                         <div class="navbar-item">
                             <div class="field is-grouped">
                                 <p class="control" v-if="is_loggedin == false">
-                                <a class="button is-rounded" href="#/login">
+                                <a class="button is-rounded is-medium" href="#/login">
                                     <span>
                                         Login
                                     </span>
                                 </a>
                                 </p>
                                 <p class="control" v-if="is_loggedin == false">
-                                <a class="button is-info is-rounded is-outlined" href="#/sign-up">
+                                <a class="button is-info is-rounded is-outlined is-medium" href="#/sign-up">
                                     <span>Register</span>
                                 </a>
                                 </p>
