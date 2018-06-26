@@ -46,7 +46,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Supper Clean Template',
-      title_sub_heading: 'Create Crisp And Clean Applications'
+      title_sub_heading: 'Let\'s Create Asthetic And Modern Applications'
     }
   },
   methods: {

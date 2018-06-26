@@ -16,10 +16,10 @@
                 
                 <div id="navbarExampleTransparentExample" class="navbar-menu">
                     <div class="navbar-start">
-                        <a class="navbar-item is-active" href="#/homepage">
+                        <a class="navbar-item" href="#/homepage">
                             Home
                         </a>
-                        <a class="navbar-item is-active" href="#/about">
+                        <a class="navbar-item" href="#/about">
                             About
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                                 </a>
                                 </p>
                                 <p class="control" v-if="is_loggedin == true">
-                        <a class="bd-tw-button button is-rounded is-danger is-outlined" target="_blank" v-on:click="logout">
+                        <a class="bd-tw-button button is-rounded is-danger is-outlined is-medium" target="_blank" v-on:click="logout">
                           <span>Logout</span>
                         </a>
                         </p>
