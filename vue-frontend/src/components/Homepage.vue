@@ -14,8 +14,8 @@
                     <h2 class="subtitle is-4">{{title_sub_heading}}</h2>
                     <br>
                     <p class="has-text-centered">
-                      <a class="button is-medium is-info is-rounded is-large">
-                        Learn more
+                      <a class="button is-large is-info is-rounded is-large" v-on:click="generate_application">
+                        Read More
                       </a>
                     </p>
                   </div>
@@ -44,9 +44,9 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      title: 'Supper Clean Template',
-      title_sub_heading: 'Let\'s Create Asthetic And Modern Applications'
+      msg: 'test',
+      title: 'Crafting Awsome Web Applications',
+      title_sub_heading: 'Using Inovatove Aproaches'
     }
   },
   methods: {
@@ -54,6 +54,9 @@ export default {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
+    },
+    generate_application: function(){
+      this.$router.replace('about')
     }
   }
 }
