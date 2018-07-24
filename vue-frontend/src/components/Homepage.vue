@@ -45,8 +45,8 @@ export default {
   data () {
     return {
       msg: 'test',
-      title: 'Crafting Awsome Web Applications',
-      title_sub_heading: 'Using Inovatove Aproaches'
+      title: 'Create Awsome Apps',
+      title_sub_heading: 'Vuejs Stack'
     }
   },
   methods: {
