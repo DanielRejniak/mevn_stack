@@ -22,6 +22,9 @@
                         <a class="navbar-item" href="#/about">
                             About
                         </a>
+                        <a class="navbar-item" href="#/about">
+                            Team
+                        </a>
                     </div>
                     
                     <div class="navbar-end">
@@ -30,7 +33,7 @@
                                 <p class="control" v-if="is_loggedin == false">
                                 <a class="button is-rounded is-medium" href="#/login">
                                     <span>
-                                        Login
+                                        Response Team Login
                                     </span>
                                 </a>
                                 </p>

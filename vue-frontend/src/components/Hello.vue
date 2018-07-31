@@ -4,7 +4,23 @@
         <Navbar></Navbar>
         <section class="hero">
           <div class="container">
-          
+            <br>
+            <hr>
+            <a class="button" @click="onPickFile">Upload Image</a>
+            <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
+            <hr>
+            
+            <div class="columns">
+              <div class="column is-12">
+                <figure class="image is-4by3">
+                      <img :src="imageUrl">
+                    </figure>
+              </div>
+              </div>
+          </div>
+          <div v-if="imageUrl != ''">
+            <hr>
+            <a class="button is-primary is-fullwidth">Send Drone To The Area</a>
           </div>
       </section>
         <br>
@@ -38,47 +54,27 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       current_email: '',
-      cards: [
-        {
-          county: 'Dublin',
-          town: 'Malahide'
-        },
-        {
-          county: 'Mayo',
-          town: 'Ballina'
-        },
-        {
-          county: 'Louth',
-          town: 'Drogheda'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        },
-        {
-          county: 'Dublin',
-          town: 'Swords'
-        }
-      ]
+      image: null,
+      imageUrl: ''
     }
   },
   methods: {
+
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Please Add A Valid File!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+    },
     logout: function() {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')

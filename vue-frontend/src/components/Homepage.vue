@@ -21,7 +21,7 @@
                   </div>
                   <div class="column is-5">
                     <figure class="image is-4by3">
-                      <img src="/static/worker.png" alt="Description">
+                      <img src="/static/drone.jpg" alt="Description">
                     </figure>
                   </div>
                   
@@ -45,8 +45,8 @@ export default {
   data () {
     return {
       msg: 'test',
-      title: 'Create Awsome Apps',
-      title_sub_heading: 'Vuejs Stack'
+      title: 'WEDA',
+      title_sub_heading: 'Watson Emergancy Drone Assistant'
     }
   },
   methods: {
