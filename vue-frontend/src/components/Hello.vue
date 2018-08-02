@@ -20,7 +20,12 @@
           </div>
           <div v-if="imageUrl != ''">
             <hr>
-            <a class="button is-primary is-fullwidth">Send Drone To The Area</a>
+            <a class="button is-primary is-fullwidth" @click="processImage">Send Drone To The Area</a>
+            <hr>
+              <div v-if="processingResult != ''">
+                Image Recognition Result : {{processingResult}}
+                <hr>
+               </div>
           </div>
       </section>
         <br>
@@ -55,7 +60,8 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       current_email: '',
       image: null,
-      imageUrl: ''
+      imageUrl: '',
+      processingResult: ''
     }
   },
   methods: {
@@ -75,21 +81,17 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
     },
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-      })
-    }
-  },
-  created() {
-    var self = this;
-    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-      axios.post(`http://localhost:3000/private/events`, {
+    processImage() {
+      var self = this;
+      //let sampleAnswer = "{0,1,false},{0,1,false},{0,2,false},{1,0,false},{1,1,false},{1,2,false},{2,0,false},{2,1,true},{2,2,false}";
+      //this.processingResult = sampleAnswer
+      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+      axios.post(`http://localhost:3000/private/watsonImageRecognition`, {
         firebaseToken: idToken
       })
       .then(response => {
         console.log(response.data.user)
-        self.current_email = response.data.user
+        self.processingResult = response.data
       })
       .catch(e => {
         this.errors.push(e)
@@ -97,6 +99,12 @@ export default {
     }).catch(function(error) {
       console.log(error)
     });
+    },
+    logout: function() {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    }
   }
 }
 </script>
