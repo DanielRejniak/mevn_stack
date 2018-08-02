@@ -8,11 +8,9 @@ exports.check = (req, res, next) => {
 };
 
 exports.watsonImageRecognition = (req, res, next) => {
-    events = {
-        name: "Test Event",
-        location_county: "Dublin",
-        location_town: "Malahide"
-    };
+    image = req.body.imageUrl
+    console.log("I recieved : " + image[0]);
+
     res.status(201).json({
         "images" : [ {
           "classifiers" : [ {

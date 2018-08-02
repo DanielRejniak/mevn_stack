@@ -80,14 +80,15 @@ export default {
         this.imageUrl = fileReader.result
       })
       fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     },
     processImage() {
       var self = this;
-      //let sampleAnswer = "{0,1,false},{0,1,false},{0,2,false},{1,0,false},{1,1,false},{1,2,false},{2,0,false},{2,1,true},{2,2,false}";
-      //this.processingResult = sampleAnswer
+      console.log(self.image)
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
       axios.post(`http://localhost:3000/private/watsonImageRecognition`, {
-        firebaseToken: idToken
+        firebaseToken: idToken,
+        imageUrl: self.image
       })
       .then(response => {
         console.log(response.data.user)

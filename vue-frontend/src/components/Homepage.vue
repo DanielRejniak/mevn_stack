@@ -13,11 +13,11 @@
                     <h1 class="title is-2">{{title}}</h1>
                     <h2 class="subtitle is-4">{{title_sub_heading}}</h2>
                     <br>
-                    <p class="has-text-centered">
-                      <a class="button is-large is-info is-rounded is-large" v-on:click="generate_application">
-                        Read More
-                      </a>
-                    </p>
+                    <a class="button is-rounded is-medium" href="#/login">
+                                    <span>
+                                        Response Team Login
+                                    </span>
+                                </a>
                   </div>
                   <div class="column is-5">
                     <figure class="image is-4by3">

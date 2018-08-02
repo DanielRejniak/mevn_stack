@@ -31,13 +31,6 @@
                         <div class="navbar-item">
                             <div class="field is-grouped">
                                 <p class="control" v-if="is_loggedin == false">
-                                <a class="button is-rounded is-medium" href="#/login">
-                                    <span>
-                                        Response Team Login
-                                    </span>
-                                </a>
-                                </p>
-                                <p class="control" v-if="is_loggedin == false">
                                 <a class="button is-info is-rounded is-outlined is-medium" href="#/sign-up">
                                     <span>Register</span>
                                 </a>
