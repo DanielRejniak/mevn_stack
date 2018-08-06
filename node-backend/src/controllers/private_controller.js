@@ -13,28 +13,28 @@ exports.check = (req, res, next) => {
 };
 
 exports.watsonImageRecognition = (req, res, next) => {
+
     image = req.body.imageUrl
     console.log("I recieved : " + image[0]);
 
-    res.status(201).json({
-        "images" : [ {
-          "classifiers" : [ {
-            "classifier_id" : "default",
-            "name" : "default",
-            "classes" : [ {
-              "class" : "fruit",
-              "score" : 0.788
-            }, {
-              "class" : "olive color",
-              "score" : 0.973
-            }, {
-              "class" : "lemon yellow color",
-              "score" : 0.789
-            } ]
-          } ],
-          "image" : "fruitbowl.jpg"
-        } ],
-        "images_processed" : 1,
-        "custom_classes" : 2
-      });
+    var images_file= image[0];
+    var classifier_ids = ["default"];
+    var threshold = 0.6;
+
+    var params = {
+      images_file: images_file,
+      classifier_ids: classifier_ids,
+      threshold: threshold
+    };
+
+    visualRecognition.classify(params, function(err, response) {
+      if (err)
+        console.log(err);
+        //res.status(400).json({"message":"Error"});
+      else
+        //console.log(JSON.stringify(response, null, 2))
+        res.status(201).json({"test" : 10});
+    });
+
+    
 };

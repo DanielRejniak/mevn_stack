@@ -23,7 +23,7 @@
             <a class="button is-primary is-fullwidth" @click="processImage">Send Drone To The Area</a>
             <hr>
               <div v-if="processingResult != ''">
-                Image Recognition Result : {{processingResult}}
+                {{processingResult}}
                 <hr>
                </div>
           </div>
