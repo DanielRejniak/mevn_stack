@@ -8,6 +8,7 @@
             <hr>
             <a class="button" @click="onPickFile">Upload Image</a>
             <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
+            <a class="button" @click="reload_page">Reset</a>
             <hr>
             
             <div class="columns">
@@ -21,11 +22,13 @@
           <div v-if="imageUrl != ''">
             <hr>
             <a class="button is-info is-fullwidth" @click="processImage">Send Drones To The Area</a>
-            <hr>
               <div v-if="processingResult != ''">
-                {{processingResult}}
                 <hr>
+                  <div class="tags" v-for="item in imageRecognitionKeyClasses">
+                    <span class="tag is-danger is-large">{{ item.class }}</span>
+                  </div>
                </div>
+               <hr>
           </div>
       </section>
         <br>
@@ -35,8 +38,7 @@
   <div class="container">
     <div class="content has-text-centered">
       <p>
-        <strong>Design</strong> by <a href="#">Daniel Rejniak</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
+        <strong>Design</strong> by <a href="#">WEDA Team</a>
       </p>
     </div>
   </div>
@@ -61,7 +63,8 @@ export default {
       current_email: '',
       image: null,
       imageUrl: '',
-      processingResult: ''
+      processingResult: '',
+      imageRecognitionKeyClasses: ''
     }
   },
   methods: {
@@ -93,6 +96,7 @@ export default {
       .then(response => {
         console.log(response.data.user)
         self.processingResult = response.data
+        self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes
       })
       .catch(e => {
         this.errors.push(e)
@@ -105,6 +109,9 @@ export default {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
+    },
+    reload_page: function() {
+      location.reload();
     }
   }
 }
