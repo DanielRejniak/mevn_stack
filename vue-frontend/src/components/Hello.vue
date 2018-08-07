@@ -20,7 +20,7 @@
           </div>
           <div v-if="imageUrl != ''">
             <hr>
-            <a class="button is-primary is-fullwidth" @click="processImage">Send Drone To The Area</a>
+            <a class="button is-info is-fullwidth" @click="processImage">Send Drones To The Area</a>
             <hr>
               <div v-if="processingResult != ''">
                 {{processingResult}}
@@ -88,7 +88,7 @@ export default {
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
       axios.post(`http://localhost:3000/private/watsonImageRecognition`, {
         firebaseToken: idToken,
-        imageUrl: self.image
+        imageBody: self.image
       })
       .then(response => {
         console.log(response.data.user)

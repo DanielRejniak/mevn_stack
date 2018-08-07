@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "btoa": "^1.2.1",
     "bulma": "^0.7.1",
     "bulma-extensions": "^2.2.1",
     "chromedriver": "^2.40.0",

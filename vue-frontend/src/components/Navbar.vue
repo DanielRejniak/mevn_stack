@@ -32,7 +32,7 @@
                             <div class="field is-grouped">
                                 <p class="control" v-if="is_loggedin == false">
                                 <a class="button is-info is-rounded is-outlined is-medium" href="#/sign-up">
-                                    <span>Register</span>
+                                    <span>Register Response Memeber</span>
                                 </a>
                                 </p>
                                 <p class="control" v-if="is_loggedin == true">

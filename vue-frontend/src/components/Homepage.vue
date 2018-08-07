@@ -14,17 +14,14 @@
                     <h2 class="subtitle is-4">{{title_sub_heading}}</h2>
                     <br>
                     <a class="button is-rounded is-medium" href="#/login">
-                                    <span>
-                                        Response Team Login
-                                    </span>
-                                </a>
+                      <span>Response Member Login</span>
+                    </a>
                   </div>
                   <div class="column is-5">
                     <figure class="image is-4by3">
                       <img src="/static/drone.jpg" alt="Description">
                     </figure>
                   </div>
-                  
                 </div>
               </div>
             </div>
