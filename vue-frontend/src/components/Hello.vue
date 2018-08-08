@@ -29,6 +29,12 @@
                   </div>
                </div>
                <hr>
+               <div v-if="peopleFound == true">
+                 <div class="notification is-danger">
+                    <button class="delete"></button>
+                      <strong>Found People</strong>
+                  </div>
+              </div>
           </div>
       </section>
         <br>
@@ -64,7 +70,8 @@ export default {
       image: null,
       imageUrl: '',
       processingResult: '',
-      imageRecognitionKeyClasses: ''
+      imageRecognitionKeyClasses: '',
+      peopleFound: ''
     }
   },
   methods: {
@@ -94,9 +101,22 @@ export default {
         imageBody: self.image
       })
       .then(response => {
-        console.log(response.data.user)
         self.processingResult = response.data
         self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes
+
+        //Words That Describe People Crowd
+        var crowdPeopleDescriptionKeys = ['people', 'crowd']
+
+        //Boolean contition that specifies if people are found
+        var numOfatttributesFound = self.imageRecognitionKeyClasses.length
+        for(var i = 0; i < numOfatttributesFound; i++) {
+          var currentAttribute = self.imageRecognitionKeyClasses[i].class
+          for(var x = 0; x <  crowdPeopleDescriptionKeys.length; x++) {
+            if(crowdPeopleDescriptionKeys[x].localeCompare(self.imageRecognitionKeyClasses[i])) {
+              self.peopleFound = true
+            }
+          }
+        }
       })
       .catch(e => {
         this.errors.push(e)
