@@ -6,9 +6,17 @@
           <div class="container">
             <br>
             <hr>
-            <a class="button" @click="onPickFile">Upload Image</a>
+
+            <div class="columns">
+            <div class="column is-6">
+              <a class="button is-fullwidth" @click="onPickFile">Upload Image</a>
             <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
-            <a class="button" @click="reload_page">Reset</a>
+            </div>
+            <div class="column is-6">
+              <a class="button is-fullwidth is-danger" @click="reload_page">Reset</a>
+            </div>
+            </div>
+            <VueSlideBar v-model="value"/>
             <hr>
             
             <div class="columns">
@@ -24,17 +32,15 @@
             <a class="button is-info is-fullwidth" @click="processImage">Send Drones To The Area</a>
               <div v-if="processingResult != ''">
                 <hr>
-                  <div class="tags" v-for="item in imageRecognitionKeyClasses">
-                    <span class="tag is-danger is-large">{{ item.class }}</span>
-                  </div>
-               </div>
-               <hr>
-               <div v-if="peopleFound == true">
-                 <div class="notification is-danger">
+                  <div v-if="peopleFound == true">
+                    <div class="notification is-danger">
                     <button class="delete"></button>
                       <strong>Found People</strong>
                   </div>
-              </div>
+                </div>
+               </div>
+               <hr>
+               
           </div>
       </section>
         <br>
@@ -57,11 +63,13 @@
 import firebase from 'firebase';
 import axios from 'axios';
 import Navbar from './Navbar'
+import VueSlideBar from 'vue-slide-bar'
 
 export default {
   name: 'hello',
   components: {
-      'Navbar': Navbar
+      'Navbar': Navbar,
+      'VueSlideBar': VueSlideBar
     },
   data () {
     return {
@@ -71,7 +79,8 @@ export default {
       imageUrl: '',
       processingResult: '',
       imageRecognitionKeyClasses: '',
-      peopleFound: ''
+      peopleFound: '',
+      value: 80
     }
   },
   methods: {
@@ -98,25 +107,21 @@ export default {
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
       axios.post(`http://localhost:3000/private/watsonImageRecognition`, {
         firebaseToken: idToken,
-        imageBody: self.image
+        imageBody: self.image,
+        treshhold: self.value
       })
       .then(response => {
         self.processingResult = response.data
-        self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes
+        self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes[0]
 
-        //Words That Describe People Crowd
-        var crowdPeopleDescriptionKeys = ['people', 'crowd']
-
-        //Boolean contition that specifies if people are found
-        var numOfatttributesFound = self.imageRecognitionKeyClasses.length
-        for(var i = 0; i < numOfatttributesFound; i++) {
-          var currentAttribute = self.imageRecognitionKeyClasses[i].class
-          for(var x = 0; x <  crowdPeopleDescriptionKeys.length; x++) {
-            if(crowdPeopleDescriptionKeys[x].localeCompare(self.imageRecognitionKeyClasses[i])) {
-              self.peopleFound = true
-            }
-          }
+        if(parseFloat(self.imageRecognitionKeyClasses.score) >= parseFloat(self.value / 100)) {
+          self.peopleFound = true
+        } else {
+          self.peopleFound = false
         }
+
+
+
       })
       .catch(e => {
         this.errors.push(e)

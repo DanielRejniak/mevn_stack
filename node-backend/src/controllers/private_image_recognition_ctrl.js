@@ -4,7 +4,7 @@ const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v
 
 var visualRecognition = new VisualRecognitionV3({
   version: '2018-03-19',
-  iam_apikey: 'QtO_Sscty7KuQ7ObjnqlSYsU0-2hvFf0Ybvm43hWoCA1'
+  iam_apikey: 'L8jziipoK4OVcJvMAlf2DZbMDiTSW3kJYl0M91VnPAd7'
 });
 
 exports.check = (req, res, next) => {
@@ -17,10 +17,12 @@ exports.watsonImageRecognition = (req, res, next) => {
 
     image = req.body.imageUrl;
 
-    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/crowd.jpg');
+    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/fruitbowl.jpg');
+
+    var user_set_treashhold = req.body.treshhold / 100;
 
     var images_file=test_file;
-    var classifier_ids = ["default"];
+    var classifier_ids = [" DefaultCustomModel_648716771"];
     var threshold = 0.6;
 
     var params = {
