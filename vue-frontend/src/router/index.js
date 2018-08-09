@@ -38,7 +38,10 @@ let router = new Router({
     {
       path: '/about',
       name: 'About',
-      component: About
+      component: About,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/hello',

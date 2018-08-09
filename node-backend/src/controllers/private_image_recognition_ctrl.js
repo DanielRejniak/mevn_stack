@@ -17,7 +17,7 @@ exports.watsonImageRecognition = (req, res, next) => {
 
     image = req.body.imageUrl;
 
-    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/fruitbowl.jpg');
+    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/crowd.jpg');
 
     var user_set_treashhold = req.body.treshhold / 100;
 

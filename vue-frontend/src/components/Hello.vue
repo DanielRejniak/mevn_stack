@@ -13,7 +13,7 @@
             <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
             </div>
             <div class="column is-6">
-              <a class="button is-fullwidth is-danger" @click="reload_page">Reset</a>
+              <a class="button is-fullwidth" @click="reload_page">Reset</a>
             </div>
             </div>
             <VueSlideBar v-model="value"/>
@@ -29,14 +29,15 @@
           </div>
           <div v-if="imageUrl != ''">
             <hr>
-            <a class="button is-info is-fullwidth" @click="processImage">Send Drones To The Area</a>
+            <a class="button is-fullwidth" @click="processImage">Analyze Photograph</a>
               <div v-if="processingResult != ''">
                 <hr>
                   <div v-if="peopleFound == true">
                     <div class="notification is-danger">
-                    <button class="delete"></button>
-                      <strong>Found People</strong>
-                  </div>
+                      <strong>Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
+                    </div>
+                    <hr>
+                    <a class="button is-outline is-link is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
                </div>
                <hr>
@@ -119,9 +120,6 @@ export default {
         } else {
           self.peopleFound = false
         }
-
-
-
       })
       .catch(e => {
         this.errors.push(e)
@@ -137,6 +135,9 @@ export default {
     },
     reload_page: function() {
       location.reload();
+    },
+    generateReport: function() {
+      this.$router.replace('about')
     }
   }
 }

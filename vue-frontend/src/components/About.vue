@@ -2,6 +2,36 @@
   <div class="hello">
     <div class="container">
       <Navbar></Navbar>
+      <hr>
+      <div class="has-text-centered">
+        <h1 class="title is-1 as-text-centered">AWEDA Drone Report</h1>
+    </div>
+    <hr>
+    <div class="columns">
+  <div class="column is-8">
+    <div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+  consectetur adipiscing elit
+</div>
+  </div>
+  <div class="column is-4">
+    <div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+  consectetur adipiscing elit
+</div>
+<div class="notification">
+  <button class="delete"></button>
+  Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+  consectetur adipiscing elit
+</div>
+  </div>
+</div>
+    
     </div>
   </div>
 </template>
@@ -24,7 +54,7 @@ export default {
   methods: {
     logout: function() {
       firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
+        this.$router.replace('homepage')
       })
     }
   }
