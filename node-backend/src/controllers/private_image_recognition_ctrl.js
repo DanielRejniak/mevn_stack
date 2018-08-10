@@ -15,9 +15,16 @@ exports.check = (req, res, next) => {
 
 exports.watsonImageRecognition = (req, res, next) => {
 
-    image = req.body.imageUrl;
+    // image = req.body.image;
 
-    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/crowd.jpg');
+    // console.log('firebaseToken = ' + req.body.firebaseToken)
+    // console.log('message = ' + req.body.message)
+    // console.log('image = ' + req.body.imageBody)
+    // console.log('threshold = ' + req.body.threshold)
+
+    console.log('calling classifier...')
+
+    var test_file = fs.createReadStream(__dirname + '/images/crowd.jpg');
 
     var user_set_treashhold = req.body.treshhold / 100;
 

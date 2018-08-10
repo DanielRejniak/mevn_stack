@@ -18,7 +18,7 @@
             </div>
             <VueSlideBar v-model="value"/>
             <hr>
-            
+
             <div class="columns">
               <div class="column is-12">
                 <figure class="image is-4by3">
@@ -41,11 +41,11 @@
                 </div>
                </div>
                <hr>
-               
+
           </div>
       </section>
         <br>
-        
+
     </div>
     <footer class="footer">
   <div class="container">
@@ -57,7 +57,7 @@
   </div>
 </footer>
 </div>
-    
+
 </template>
 
 <script>
@@ -77,6 +77,7 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       current_email: '',
       image: null,
+      imageName: '',
       imageUrl: '',
       processingResult: '',
       imageRecognitionKeyClasses: '',
@@ -100,17 +101,31 @@ export default {
         this.imageUrl = fileReader.result
       })
       fileReader.readAsDataURL(files[0])
+      this.imageName = filename
       this.image = files[0]
     },
     processImage() {
       var self = this;
       console.log(self.image)
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-      axios.post(`http://localhost:3000/private/watsonImageRecognition`, {
-        firebaseToken: idToken,
-        imageBody: self.image,
-        treshhold: self.value
-      })
+
+      let url =`http://localhost:3000/private/watsonImageRecognition`
+
+      // let data = {
+      //   firebaseToken: idToken,
+      //   message: self.msg,
+      //   imageBody: self.image,
+      //   threshold: self.value
+      // }
+
+      let formData = new FormData();
+      formData.append('image', self.image, self.imageName);
+
+      const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+      }
+
+      axios.post(url, formData, config)
       .then(response => {
         self.processingResult = response.data
         self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes[0]
