@@ -111,21 +111,21 @@ export default {
 
       let url =`http://localhost:3000/private/watsonImageRecognition`
 
-      // let data = {
-      //   firebaseToken: idToken,
-      //   message: self.msg,
-      //   imageBody: self.image,
-      //   threshold: self.value
-      // }
-
-      let formData = new FormData();
-      formData.append('image', self.image, self.imageName);
-
-      const config = {
-            headers: { 'content-type': 'multipart/form-data' }
+      let data = {
+        firebaseToken: idToken,
+        message: self.msg,
+        imageBody: self.image,
+        threshold: self.value
       }
 
-      axios.post(url, formData, config)
+      // let formData = new FormData();
+      // formData.append('image', self.image, self.imageName);
+      //
+      // const config = {
+      //       headers: { 'content-type': 'multipart/form-data' }
+      // }
+
+      axios.post(url, data)
       .then(response => {
         self.processingResult = response.data
         self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes[0]
