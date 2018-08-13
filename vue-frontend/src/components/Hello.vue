@@ -37,12 +37,18 @@
                       <strong>Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
                     </div>
                     <hr>
+                    <label class="label">Hi there, I am virtual assistant for emergency drone service. Do you require medical attention?</label>
+                    <figure class="image is-64x64">
+                      <img src="/static/microphone.png">
+                    </figure>
+                    <hr>
                     <a class="button is-outline is-link is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
                </div>
                <hr>
 
           </div>
+
       </section>
         <br>
 
@@ -115,6 +121,7 @@ export default {
         firebaseToken: idToken,
         message: self.msg,
         imageBody: self.image,
+        imageName: self.imageName,
         threshold: self.value
       }
 
