@@ -22,9 +22,7 @@ exports.watsonImageRecognition = (req, res, next) => {
     // console.log('image = ' + req.body.imageBody)
     // console.log('threshold = ' + req.body.threshold)
 
-    console.log('calling classifier...')
-
-    var test_file = fs.createReadStream(__dirname + '/images/crowd.jpg');
+    var test_file = fs.createReadStream('/Users/danielrejniak/Desktop/crowd.jpg');
 
     var user_set_treashhold = req.body.treshhold / 100;
 
@@ -37,6 +35,8 @@ exports.watsonImageRecognition = (req, res, next) => {
       classifier_ids: classifier_ids,
       threshold: threshold
     };
+
+    console.log('Calling Visual Recognition Classifier...')
 
     visualRecognition.classify(params, function(err, response) {
       if (err)
