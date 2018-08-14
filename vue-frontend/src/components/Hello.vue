@@ -33,16 +33,33 @@
               <div v-if="processingResult != ''">
                 <hr>
                   <div v-if="peopleFound == true">
-                    <div class="notification is-danger">
+                    <div class="notification has-text-centered">
                       <strong>Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
                     </div>
                     <hr>
-                    <label class="label">Hi there, I am virtual assistant for emergency drone service. Do you require medical attention?</label>
-                    <figure class="image is-64x64">
-                      <img src="/static/microphone.png">
-                    </figure>
+                    <section class="hero is-info">
+                      <div class="hero-body">
+                        <div class="container">
+                          <h1 class="title has-text-centered">
+                            Hi there, I am virtual Watson Assistant for emergency drone service.
+                          </h1>
+                          <h2 class="subtitle has-text-centered">
+                            Start Conversation Now
+                          </h2>
+                          <nav class="level has-text-centered">
+                            <p class="level-item has-text-centered">
+                              <span class="icon is-large">
+                                <figure class="image is-64x64">
+                                  <img src="/static/microphone.png">
+                                </figure>
+                              </span>
+                            </p>
+                          </nav>
+                          </div>
+                        </div>
+                      </section>
                     <hr>
-                    <a class="button is-outline is-link is-fullwidth" @click="generateReport">Generate Report</a>
+                    <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
                </div>
                <hr>
