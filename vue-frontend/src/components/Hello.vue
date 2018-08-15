@@ -37,49 +37,41 @@
                       <strong>Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
                     </div>
                     <hr>
-                    <section class="hero is-info">
-                      <div class="hero-body">
-                        <div class="container">
-                          <h1 class="title has-text-centered">
-                            Hi there, I am virtual Watson Assistant for emergency drone service.
-                          </h1>
-                          <h2 class="subtitle has-text-centered">
-                            Start Conversation Now
-                          </h2>
-                          <nav class="level has-text-centered">
-                            <p class="level-item has-text-centered">
-                              <span class="icon is-large">
-                                <figure class="image is-64x64">
-                                  <img src="/static/microphone.png">
-                                </figure>
-                              </span>
-                            </p>
-                          </nav>
-                          </div>
-                        </div>
-                      </section>
+                    <div v-for="answer in chatMessageQueue">
+                      <br>
+                      <div v-if="answer.sender == 'Watson Assistant'">
+                        <div class="notification is-info">
+                          <strong>{{answer.sender}} : </strong>{{answer.message}}
+                       </div>
+                      </div>
+                      <div v-if="answer.sender == 'User'">
+                        <div class="notification is-success">
+                          <strong>{{answer.sender}} : </strong>{{answer.message}}
+                       </div>
+                      </div>
+                    </div>
+                    <hr>
+                      <input v-on:keyup.enter="processWatsonAssistantDataProcessing" class="input" type="text" placeholder="Aske Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
                     <hr>
                     <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
                </div>
                <hr>
-
           </div>
-
       </section>
-        <br>
+      <br>
 
     </div>
-    <footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Design</strong> by <a href="#">WEDA Team</a>
-      </p>
+      <footer class="footer">
+        <div class="container">
+          <div class="content has-text-centered">
+            <p>
+              <strong>Design</strong> by <a href="#">WEDA Team</a>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
-  </div>
-</footer>
-</div>
 
 </template>
 
@@ -105,7 +97,9 @@ export default {
       processingResult: '',
       imageRecognitionKeyClasses: '',
       peopleFound: '',
-      value: 80
+      value: 80,
+      chatMessageQueue: [],
+      watsonAssistantChatInput: ''
     }
   },
   methods: {
@@ -129,7 +123,6 @@ export default {
     },
     processImage() {
       var self = this;
-      console.log(self.image)
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
 
       let url =`http://localhost:3000/private/watsonImageRecognition`
@@ -141,13 +134,6 @@ export default {
         imageName: self.imageName,
         threshold: self.value
       }
-
-      // let formData = new FormData();
-      // formData.append('image', self.image, self.imageName);
-      //
-      // const config = {
-      //       headers: { 'content-type': 'multipart/form-data' }
-      // }
 
       axios.post(url, data)
       .then(response => {
@@ -164,6 +150,35 @@ export default {
         this.errors.push(e)
       })
     }).catch(function(error) {
+      console.log(error)
+    });
+    },
+    processWatsonAssistantDataProcessing: function() {
+      
+      var self = this;
+
+      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+        let url =`http://localhost:3000/private/watsonAssistant`
+
+        var user_response = {
+          sender: 'User',
+          message: self.watsonAssistantChatInput
+        };
+
+        //Push user question into message queue
+        self.chatMessageQueue.push(user_response)
+
+        //Send user question to backend API
+        let data = {
+          firebaseToken: idToken,
+          answer: self.watsonAssistantChatInput
+        }
+
+        axios.post(url, data)
+        .then(response => {
+          self.chatMessageQueue.push(response.data)
+        });
+      }).catch(function(error) {
       console.log(error)
     });
     },

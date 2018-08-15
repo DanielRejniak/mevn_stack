@@ -36,8 +36,6 @@ exports.watsonImageRecognition = (req, res, next) => {
       threshold: threshold
     };
 
-    console.log('Calling Visual Recognition Classifier...')
-
     visualRecognition.classify(params, function(err, response) {
       if (err)
         console.log(err);

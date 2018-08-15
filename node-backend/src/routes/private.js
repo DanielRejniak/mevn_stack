@@ -9,7 +9,7 @@ const private_watson_assistant_ctrl = require('../controllers/private_watson_ass
 const checkAuth = require('../middleware/check-auth');
 
 router.post("/watsonImageRecognition", checkAuth, private_image_recognition_ctrl.watsonImageRecognition);
-router.post("/watsonAssistant", checkAuth, private_watson_assistant_ctrl.check);
+router.post("/watsonAssistant", checkAuth, private_watson_assistant_ctrl.watsonAssistant);
 router.post("/watsonTextToSpeach", checkAuth, private_text_to_speach_ctrl.check);
 router.post("/watsonSpeachToText", checkAuth, private_speach_to_text_ctrl.check);
 
