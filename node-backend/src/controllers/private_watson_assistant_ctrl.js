@@ -22,7 +22,7 @@ exports.watsonAssistant = (req, res, next) => {
 
     //Call Watson Assistant
     assistant.message({
-        workspace_id: 'd4843af8-e28b-4088-ad0f-d42448ed3425',
+        workspace_id: '927342bb-6845-410d-9af0-9d358da445c7',
         input: {'text': user_input}
       },  function(err, response) {
         if (err)

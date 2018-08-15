@@ -51,7 +51,7 @@
                       </div>
                     </div>
                     <hr>
-                      <input v-on:keyup.enter="processWatsonAssistantDataProcessing" class="input" type="text" placeholder="Aske Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
+                      <input v-on:keyup.enter="processWatsonAssistantData" class="input" type="text" placeholder="Ask Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
                     <hr>
                     <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
@@ -153,12 +153,12 @@ export default {
       console.log(error)
     });
     },
-    processWatsonAssistantDataProcessing: function() {
+    processWatsonAssistantData: function() {
       
       var self = this;
 
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-        let url =`http://localhost:3000/private/watsonAssistant`
+       
 
         var user_response = {
           sender: 'User',
@@ -173,6 +173,8 @@ export default {
           firebaseToken: idToken,
           answer: self.watsonAssistantChatInput
         }
+
+         let url =`http://localhost:3000/private/watsonAssistant`
 
         axios.post(url, data)
         .then(response => {
