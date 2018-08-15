@@ -59,6 +59,8 @@
                         </div>
                       </section>
                     <hr>
+                    <a class="button is-outline is-fullwidth" @click="startChatbot">Start Conversation Now</a>
+                    <hr>
                     <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
                </div>
@@ -177,6 +179,28 @@ export default {
     },
     generateReport: function() {
       this.$router.replace('about')
+    },
+    startChatbot: function() {
+      var self = this;
+      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+
+      let url =`http://localhost:3000/private/watsonTextToSpeech`
+
+      let data = {
+        firebaseToken: idToken,
+        message: self.msg,
+      }
+
+      axios.post(url, data)
+      .then(response => {
+        self.processingResult = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }).catch(function(error) {
+      console.log(error)
+    });
     }
   }
 }
