@@ -59,7 +59,7 @@
                         </div>
                       </section>
                     <hr>
-                    <a class="button is-outline is-fullwidth" @click="startChatbot">Start Conversation Now</a>
+                    <input v-on:keyup.enter="startChatbot" class="input" type="text" placeholder="Ask Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
                     <hr>
                     <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
                 </div>
@@ -107,7 +107,9 @@ export default {
       processingResult: '',
       imageRecognitionKeyClasses: '',
       peopleFound: '',
-      value: 80
+      value: 80,
+      watsonAssistantChatInput: '',
+      watsonAssistantChatOutput: ''
     }
   },
   methods: {
@@ -144,13 +146,6 @@ export default {
         threshold: self.value
       }
 
-      // let formData = new FormData();
-      // formData.append('image', self.image, self.imageName);
-      //
-      // const config = {
-      //       headers: { 'content-type': 'multipart/form-data' }
-      // }
-
       axios.post(url, data)
       .then(response => {
         self.processingResult = response.data
@@ -186,14 +181,29 @@ export default {
 
       let url =`http://localhost:3000/private/watsonTextToSpeech`
 
+      const textInput = self.watsonAssistantChatInput
+
       let data = {
         firebaseToken: idToken,
-        message: self.msg,
+        message: textInput
       }
 
       axios.post(url, data)
       .then(response => {
-        self.processingResult = response.data
+        self.watsonAssistantChatInput = ""
+        // var audio = new Audio(response.data);
+        // var audio = new Audio(response.data.data);
+        // var audio = new Audio('/Users/Daniel.Connaughton@ibm.com/Desktop/Hackathon/mevn_stack/node-backend/text_to_speech_test.mp3');
+        // var audio = new Audio(require('/Users/Daniel.Connaughton@ibm.com/Desktop/Hackathon/mevn_stack/node-backend/text_to_speech_test.mp3'));
+
+        var playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise.then(function() {
+          }).catch(function(error) {
+          });
+        }
+
       })
       .catch(e => {
         this.errors.push(e)
@@ -201,7 +211,7 @@ export default {
     }).catch(function(error) {
       console.log(error)
     });
-    }
+  },
   }
 }
 </script>

@@ -16,7 +16,8 @@ exports.check = (req, res, next) => {
 
 exports.watsonTextToSpeech = (req, res, next) => {
 
-  console.log("Calling Text to Speech API")
+  const message = req.body.message
+  console.log('message = ' + message)
 
   // textToSpeech.listVoices(null, function(error, voices) {
   //   if (error) {
@@ -27,14 +28,18 @@ exports.watsonTextToSpeech = (req, res, next) => {
   // });
 
   var synthesizeParams = {
-    text: 'Hi Daniel',
-    accept: 'audio/wav',
-    voice: 'en-US_LisaVoice'
+    text: message,
+    accept: 'audio/mp3',
+    voice: 'en-US_MichaelVoice'
   };
 
-  // Pipe the synthesized text to a file.
-  textToSpeech.synthesize(synthesizeParams).on('error', function(error) {
-    console.log(error);
-  }).pipe(fs.createWriteStream('text_to_speech_test.wav'));
+  console.log("Calling Text to Speech API")
+
+  textToSpeech.synthesize(synthesizeParams, function(err, response) {
+    if (err)
+      console.log(err);
+    else
+      res.status(201).json(response);
+  }).pipe(fs.createWriteStream('text_to_speech_test.mp3'));
 
 }
