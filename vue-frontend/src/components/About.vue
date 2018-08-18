@@ -61,6 +61,7 @@
 </div>
 </div>
   </div>
+  <a class="button is-outline is-danger is-fullwidth" @click="">Clear Reports</a>
 </div> 
     
     </div>

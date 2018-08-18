@@ -29,14 +29,24 @@
           </div>
           <div v-if="imageUrl != ''">
             <hr>
-            <a class="button is-fullwidth" @click="processImage">Analyze Photograph</a>
+            <div v-if="processingResult == '' && waitingForImageProcessing == false">
+              <a class="button is-fullwidth" @click="processImage">Analyze Photograph</a>
+            </div>
+            <div v-if="waitingForImageProcessing">
+              <figure class="image is-2by2">
+                  <img src="/static/ibm-watson.gif">
+              </figure>
+            </div>
               <div v-if="processingResult != ''">
-                <hr>
                   <div v-if="peopleFound == true">
                     <div class="notification has-text-centered">
                       <strong>Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
                     </div>
                     <hr>
+
+                    <div v-if="chatMessageQueue.length == 0">
+                      <a class="button is-outline is-info is-fullwidth" @click="processWatsonAssistantData">Interact With Watson Assistant</a>
+                    </div>
                     <div v-for="answer in chatMessageQueue">
                       <br>
                       <div v-if="answer.sender == 'Watson Assistant'">
@@ -51,12 +61,15 @@
                       </div>
                     </div>
                     <hr>
+                    <div v-if="chatMessageQueue.length != 0">
                       <input v-on:keyup.enter="processWatsonAssistantData" class="input" type="text" placeholder="Ask Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
-                    <hr>
-                    <a class="button is-outline is-fullwidth" @click="generateReport">Generate Report</a>
+                      <hr>
+                      <a class="button is-outline is-danger is-fullwidth" @click="generateReport">Generate Report</a>
+                    </div>
+                    
                 </div>
                </div>
-               <hr>
+
           </div>
       </section>
       <br>
@@ -99,7 +112,8 @@ export default {
       peopleFound: '',
       value: 80,
       chatMessageQueue: [],
-      watsonAssistantChatInput: ''
+      watsonAssistantChatInput: '',
+      waitingForImageProcessing: false
     }
   },
   methods: {
@@ -123,6 +137,7 @@ export default {
     },
     processImage() {
       var self = this;
+      self.waitingForImageProcessing = true
       firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
 
       let url =`http://localhost:3000/private/watsonImageRecognition`
@@ -137,6 +152,7 @@ export default {
 
       axios.post(url, data)
       .then(response => {
+        self.waitingForImageProcessing = false
         self.processingResult = response.data
         self.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes[0]
 
@@ -165,8 +181,9 @@ export default {
           message: self.watsonAssistantChatInput
         };
 
-        //Push user question into message queue
-        self.chatMessageQueue.push(user_response)
+        if(self.watsonAssistantChatInput != '') {
+          self.chatMessageQueue.push(user_response)
+        }
 
         //Send user question to backend API
         let data = {
@@ -179,6 +196,7 @@ export default {
         axios.post(url, data)
         .then(response => {
           self.chatMessageQueue.push(response.data)
+          self.watsonAssistantChatInput = ''
         });
       }).catch(function(error) {
       console.log(error)
@@ -193,6 +211,8 @@ export default {
       location.reload();
     },
     generateReport: function() {
+      var self = this;
+      console.log(self.chatMessageQueue)
       this.$router.replace('about')
     }
   }
