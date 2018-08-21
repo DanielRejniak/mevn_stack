@@ -17,7 +17,7 @@
                 <div id="navbarExampleTransparentExample" class="navbar-menu">
                     <div class="navbar-start">
                         <a class="navbar-item" href="#/homepage">
-                            Home
+                            Dashboard
                         </a>
                         <a class="navbar-item" href="#/about">
                             About

@@ -63,6 +63,16 @@
   </div>
   <a class="button is-outline is-danger is-fullwidth" @click="">Clear Reports</a>
 </div> 
+<br>
+  <footer class="footer">
+        <div class="container">
+          <div class="content has-text-centered">
+            <p>
+              <strong>Design</strong> by <a href="#">AWEDA Team</a>
+            </p>
+          </div>
+        </div>
+      </footer>
     
     </div>
   </div>
@@ -74,10 +84,11 @@ import axios from 'axios';
 import Navbar from './Navbar'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+
 export default {
   name: 'hello',
   components: {
-    'Navbar': Navbar
+    'Navbar': Navbar,
   },
   data () {
     return {

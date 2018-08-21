@@ -5,6 +5,8 @@ services:
     build: node-backend
     ports:
       - "3000:3000"
+    links:
+      - database
   
   vue-frontend:
     build: vue-frontend

@@ -3,6 +3,7 @@
   <div class="container">
         <Navbar></Navbar>
         <section class="hero">
+          <div v-if="processingResult == '' && waitingForImageProcessing == false">
           <div class="container">
             <br>
             <hr>
@@ -19,6 +20,7 @@
             <VueSlideBar v-model="value"/>
             <hr>
 
+            
             <div class="columns">
               <div class="column is-12">
                 <figure class="image is-4by3">
@@ -26,6 +28,7 @@
                     </figure>
               </div>
               </div>
+          </div>
           </div>
           <div v-if="imageUrl != ''">
             <hr>
@@ -79,7 +82,7 @@
         <div class="container">
           <div class="content has-text-centered">
             <p>
-              <strong>Design</strong> by <a href="#">WEDA Team</a>
+              <strong>Design</strong> by <a href="#">AWEDA Team</a>
             </p>
           </div>
         </div>
@@ -98,7 +101,7 @@ export default {
   name: 'hello',
   components: {
       'Navbar': Navbar,
-      'VueSlideBar': VueSlideBar
+      'VueSlideBar': VueSlideBar,
     },
   data () {
     return {
@@ -212,7 +215,22 @@ export default {
     },
     generateReport: function() {
       var self = this;
-      console.log(self.chatMessageQueue)
+      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+
+        console.log("Generating JSON Report Request")
+
+        let url =`http://localhost:3000/private/generateJSONReport`
+
+        let data = {
+          firebaseToken: idToken,
+          image_recognition_confidence_score: self.imageRecognitionKeyClasses.score * 100,
+          watson_assistant_conversation_log: self.chatMessageQueue
+          //image_id: '',
+          //image_gps_location: ''
+        }
+
+        axios.post(url, data)
+      });
       this.$router.replace('about')
     }
   }
