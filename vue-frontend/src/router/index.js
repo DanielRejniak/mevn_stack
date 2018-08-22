@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Homepage from '@/components/Homepage'
-import About from '@/components/About'
+import Submit from '@/components/Submit'
+import Report from '@/components/Report'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -36,17 +36,14 @@ let router = new Router({
       component: Homepage
     },
     {
-      path: '/about',
-      name: 'About',
-      component: About,
-      meta: {
-        requiresAuth: true
-      }
+      path: '/submit',
+      name: 'Submit',
+      component: Submit
     },
     {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello,
+      path: '/report',
+      name: 'Report',
+      component: Report,
       meta: {
         requiresAuth: true
       }
@@ -59,7 +56,7 @@ router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('homepage')
-  else if (!requiresAuth && currentUser) next('hello')
+  else if (!requiresAuth && currentUser) next('report')
   else next()
 })
 

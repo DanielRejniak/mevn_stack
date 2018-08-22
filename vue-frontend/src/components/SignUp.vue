@@ -26,7 +26,7 @@
 
                 <br>
                                                                                           
-                <button v-on:click="signUp" type="submit" class="button is-info is-fullwidth is-rounded is-bold">
+                <button v-on:click="signUp" type="submit" class="button is-primary is-fullwidth is-rounded is-bold">
                    <span>Register</span>
                 </button>
                 <br>

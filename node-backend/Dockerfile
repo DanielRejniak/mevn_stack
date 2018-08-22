@@ -8,6 +8,7 @@ WORKDIR /usr/src/app-backend
 
 # Copy dependency definitions
 COPY package.json /usr/src/app-backend
+COPY image-store /usr/src/app-backend
 
 # Install dependecies
 RUN npm install

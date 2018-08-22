@@ -26,7 +26,7 @@
 
                 <br>
                                                                                           
-                <button v-on:click="signIn" type="submit" class="button is-info is-fullwidth is-rounded is-bold">
+                <button v-on:click="signIn" type="submit" class="button is-primary is-fullwidth is-rounded is-bold">
                    <span>Login</span>
                 </button>
                 <br>
@@ -59,7 +59,7 @@
       signIn: function() {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           (user) => {
-            this.$router.replace('hello')
+            this.$router.replace('report')
           },
           (err) => {
             alert('Oops. ' + err.message)

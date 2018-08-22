@@ -17,10 +17,7 @@
                 <div id="navbarExampleTransparentExample" class="navbar-menu">
                     <div class="navbar-start">
                         <a class="navbar-item" href="#/homepage">
-                            Dashboard
-                        </a>
-                        <a class="navbar-item" href="#/about">
-                            About
+                            Homepage
                         </a>
                         <a class="navbar-item" href="#/about">
                             Team
@@ -31,12 +28,15 @@
                         <div class="navbar-item">
                             <div class="field is-grouped">
                                 <p class="control" v-if="is_loggedin == false">
-                                <a class="button is-info is-rounded is-outlined is-medium" href="#/sign-up">
-                                    <span>Register Response Memeber</span>
+                                <a class="button is-rounded is-medium" href="#/login">
+                                    <span>Response Member Login</span>
+                                </a>
+                                <a class="button is-primary is-rounded is-outlined is-medium" href="#/sign-up">
+                                    <span>Register</span>
                                 </a>
                                 </p>
                                 <p class="control" v-if="is_loggedin == true">
-                        <a class="bd-tw-button button is-rounded is-link is-outlined is-medium" target="_blank" v-on:click="logout">
+                        <a class="bd-tw-button button is-rounded is-primary is-outlined is-medium" target="_blank" v-on:click="logout">
                           <span>Logout</span>
                         </a>
                         </p>

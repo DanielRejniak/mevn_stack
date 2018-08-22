@@ -8,19 +8,21 @@
           </div>
             <div class="hero-body">
               <div class="container has-text-centered">
-                <div class="columns is-vcentered">
-                  <div class="column is-6">
-                    <h1 class="title is-2">{{title}}</h1>
-                    <h2 class="subtitle is-4">{{title_sub_heading}}</h2>
-                    <br>
-                    <a class="button is-rounded is-medium" href="#/login">
-                      <span>Response Member Login</span>
-                    </a>
+                <nav class="level">
+                  <div class="level-item">
+                    <figure class="image" style="width:50%">
+                      <img src="/static/ibm-watson.gif" alt="Description">
+                </figure>
                   </div>
-                  <div class="column is-5">
-                    <figure class="image is-4by3">
-                      <img src="/static/drone.jpg" alt="Description">
-                    </figure>
+                </nav>
+                <div class="columns is-vcentered">
+                  <div class="column is-12">
+                    <h1 class="title is-2">{{title_sub_heading}}</h1>
+                    <h2 class="subtitle is-4">{{title}}</h2>
+                    <br>
+                    <a class="button is-rounded is-primary is-medium" href="#/submit">
+                      <span>Submit Report</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -42,8 +44,8 @@ export default {
   data () {
     return {
       msg: 'test',
-      title: 'WEDA',
-      title_sub_heading: 'Watson Emergancy Drone Assistant'
+      title: 'Made Using IBM One Cloud Services',
+      title_sub_heading: 'Autonomous Watson Emergency Drone Assistants'
     }
   },
   methods: {
