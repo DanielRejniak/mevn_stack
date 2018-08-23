@@ -20,7 +20,7 @@
             <VueSlideBar v-model="value"/>
             <hr>
 
-            
+
             <div class="columns">
               <div class="column is-12">
                 <figure class="image is-4by3">
@@ -138,7 +138,7 @@ export default {
     },
     processImage() {
       this.waitingForImageProcessing = true
-      let url =`http://localhost:3000/public/watsonImageRecognition`
+      let url =`http://node-backend:3000/public/watsonImageRecognition`
 
       console.log(this.image.name)
 
@@ -181,7 +181,7 @@ export default {
           answer: this.watsonAssistantChatInput
         }
 
-        let url =`http://localhost:3000/public/watsonAssistant`
+        let url =`http://node-backend:3000/public/watsonAssistant`
 
         console.log("Making Watson Assistant Request")
 
@@ -200,8 +200,8 @@ export default {
       location.reload();
     },
     generateReport: function() {
-        
-        let url =`http://localhost:3000/public/generateJSONReport`
+
+        let url =`http://node-backend:3000/public/generateJSONReport`
 
         let data = {
           image_recognition_confidence_score: this.imageRecognitionKeyClasses.score * 100,
