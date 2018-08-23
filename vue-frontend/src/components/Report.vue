@@ -4,7 +4,10 @@
       <Navbar></Navbar>
       <hr>
       <div class="has-text-centered">
-        <h1 class="title is-1 as-text-centered">AWEDA Cognitive Report</h1>
+        <div class="notification is-info">
+          <button class="delete"></button>
+            <strong>Welcome AWEDA Report Dashboard.</strong> Currently we are displaying area of <strong>Los Angeles</strong> there are <strong>{{database_results.length}}</strong> reports for this area that require attention.
+          </div>
     </div>
     <hr>
     <div class="columns">
@@ -30,25 +33,67 @@
 
 <div class="columns is-multiline">
    <div class="column is-half" v-for="result in database_results">
-    <article class="message">
-      <div class="message-header">
-    <p><strong>Marker Location : </strong>{{result.image_gps_location.label.text}}</p>
-    <p><span class="tag is-danger">High Priority</span></p>
+
+  <div class="card">
+    <div class="message-header">
+    <p>Report : {{result.image_gps_location.label.text}}</p>
+
+    <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
+      <p><span class="tag is-danger">High Priority</span></p>
+    </div>
+
+    <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
+      <p><span class="tag is-warning">Medium Priority</span></p>
+    </div>
+
+    <div v-if="result.image_provided == 'false'">
+      <p><span class="tag is-success">Low Priority</span></p>
+    </div>
+
   </div>
-      <div class="message-body">
-      <strong>Watson Found People With Confidence Of : </strong>{{result.people_found_confidence}}%
-      <hr>
-      <strong>Injured : </strong>Yes
-      <br>
-      <strong>AID Kit Required : </strong>Yes
-      <br>
-      <strong>Fresh Water Required : </strong>Yes
-      <hr>
-      <a class="button is-fullwidth" @click="openReportModal(result.watson_assistant_chat_log)">View Full Chat Log</a>
-      <br>
-      <a class="button is-fullwidth" @click="openImageModal(result.image_id)">View Actual Image</a>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-128x128">
+          <img :src="/static/ + result.image_id" alt="Actual Image" @click="openImageModal(result.image_id)">
+        </figure>
       </div>
-  </article>
+      <div class="media-content">
+
+        <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
+          <span class="icon has-text-success"><i class="fas fa-2x fa-check-square"></i></span>
+          <p class="title is-4">Watson People Found</p>
+          <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
+        </div>
+
+        <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
+          <span class="icon has-text-warning"><i class="fas fa-2x fa-exclamation-triangle"></i></span>
+          <p class="title is-4">Watson Did Not Find People</p>
+          <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
+        </div>
+
+        <div v-if="result.people_found == 'false' && result.image_provided == 'false'">
+          <span class="icon has-text-danger"><i class="fas fa-2x has-text-danger"></i></span>
+          <p class="title is-4">No Image Provided</p>
+          <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="content">
+      <p><strong>First Aid Kit Required : </strong>
+      <p><strong>Fresh Water : </strong>
+      <p><strong>People Injured : </strong>
+      <hr>
+      <a @click="openReportModal(result.watson_assistant_chat_log)">View full conversation</a>
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item">Response Team Sent</a>
+  </footer>
+</div>
+
+
 </div> 
   </div>
 
@@ -108,7 +153,9 @@ export default {
       showImageModal: false,
       showReportModal: false,
       currentSelectedChatLog: [],
-      currentSelectedImageId: ''
+      currentSelectedImageId: '',
+      peopleFound: 'not_available',
+      reportPriority: 'low'
     }
   },
   methods: {
