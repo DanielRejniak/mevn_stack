@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vue-frontend
+  labels:
+    app: vue-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vue-frontend
+  template:
+    metadata:
+      labels:
+        app: vue-frontend
+    spec:
+      containers:
+      - name: vue-frontend
+        image: registry.eu-de.bluemix.net/aweda/vue-frontend:1
+        ports:
+        - containerPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-backend
+  labels:
+    app: node-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-backend
+  template:
+    metadata:
+      labels:
+        app: node-backend
+    spec:
+      containers:
+      - name: node-backend
+        image: registry.eu-de.bluemix.net/aweda/node-backend:1
+        ports:
+        - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-db
+  labels:
+    app: mongo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-db
+  template:
+    metadata:
+      labels:
+        app: mongo-db
+    spec:
+      containers:
+      - name: mongo-db
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-backend
+spec:
+  selector:
+    app: node-backend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: vue-frontend
+spec:
+  selector:
+    app: vue-frontend
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: database
+spec:
+  selector:
+    app: mongo-db
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
