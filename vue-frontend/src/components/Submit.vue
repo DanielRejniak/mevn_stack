@@ -172,7 +172,8 @@ export default {
       chatMessageQueue: [],
       watsonAssistantChatInput: '',
       waitingForImageProcessing: false,
-      imageProvided: false
+      imageProvided: false,
+      conversationContext: ''
     }
   },
   methods: {
@@ -244,7 +245,8 @@ export default {
         }
 
         let data = {
-          answer: this.watsonAssistantChatInput
+          answer: this.watsonAssistantChatInput,
+          context: this.conversationContext
         }
 
         let url =`http://localhost:3000/public/watsonAssistant`
@@ -257,6 +259,7 @@ export default {
         .then(response => {
           this.chatMessageQueue.push(response.data)
           this.watsonAssistantChatInput = ''
+          this.conversationContext = response.data.context
         });
     },
     logout: function() {

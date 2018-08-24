@@ -81,9 +81,13 @@
       </div>
     </div>
     <div class="content">
-      <p><strong>First Aid Kit Required : </strong>
-      <p><strong>Fresh Water : </strong>
-      <p><strong>People Injured : </strong>
+      <p><strong>How Many People Found : </strong>
+      <p><strong>Severely Injured : </strong>
+      <p><strong>Access To Water : </strong>
+      <p><strong>Current Danger In Vcinity : </strong>
+      <p><strong>What Is Needed : </strong>
+
+      
       <hr>
       <a @click="openReportModal(result.watson_assistant_chat_log)">View full conversation</a>
     </div>
