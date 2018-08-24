@@ -16,7 +16,7 @@ exports.watsonImageRecognition = (req, res) => {
     console.log("Image Name Passed : " + req.body.imageName);
 
     var images_file=test_file;
-    var classifier_ids = [" DefaultCustomModel_648716771"];
+    var classifier_ids = ["USfiredetectionmodel_1467969362"];
     var threshold = 0.6;
 
     var params = {

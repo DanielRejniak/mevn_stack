@@ -137,10 +137,11 @@ export default {
       this.image = files[0]
     },
     processImage() {
+      // This is for the Watson logo so it starts spinning
       this.waitingForImageProcessing = true
-      let url =`http://node-backend:3000/public/watsonImageRecognition`
+      let url =`http://159.122.175.35:31491/public/watsonImageRecognition`
 
-      console.log(this.image.name)
+      console.log("The name of the image added is: " + this.image.name)
 
       let data = {
         message: this.msg,
@@ -149,12 +150,15 @@ export default {
         threshold: this.value
       }
 
-      console.log("Making Image Processing Request")
+      console.log("Posting to the Image Processing backend API with the url: " + url + " and with the imageBody: " + imageBody " , imageName: " + imageName + " , threshold: " + threshold)
 
       axios.post(url, data)
       .then(response => {
+        // This is for the Watson logo so it stops spinning and hides
         this.waitingForImageProcessing = false
+        // This is the result which comes back from the API
         this.processingResult = response.data
+        // Retrieving the attributes such as people found, etc to be displayed
         this.imageRecognitionKeyClasses = response.data.images[0].classifiers[0].classes[0]
 
         if(parseFloat(this.imageRecognitionKeyClasses.score) >= parseFloat(this.value / 100)) {
@@ -181,7 +185,7 @@ export default {
           answer: this.watsonAssistantChatInput
         }
 
-        let url =`http://node-backend:3000/public/watsonAssistant`
+        let url =`http://159.122.175.35:31491/public/watsonAssistant`
 
         console.log("Making Watson Assistant Request")
 
@@ -201,7 +205,7 @@ export default {
     },
     generateReport: function() {
 
-        let url =`http://node-backend:3000/public/generateJSONReport`
+        let url =`http://159.122.175.35:31491/public/generateJSONReport`
 
         let data = {
           image_recognition_confidence_score: this.imageRecognitionKeyClasses.score * 100,
