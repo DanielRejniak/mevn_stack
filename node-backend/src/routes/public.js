@@ -14,5 +14,6 @@ router.post("/watsonSpeachToText", public_speach_to_text_ctrl.check);
 router.post("/generateJSONReport", public_report_generator_ctrl.generateJSONReport);
 router.get("/retrieveReports", public_report_generator_ctrl.retrieveReports);
 router.get("/clearReports", public_report_generator_ctrl.clearReports);
+router.post("/clearReport", public_report_generator_ctrl.clearReport);
 
 module.exports = router;
