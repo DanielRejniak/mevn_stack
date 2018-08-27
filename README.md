@@ -97,7 +97,7 @@ Here is an example output:
   |:--------|:--- |:------|:--- |:---- |
   |mongo-db-5765666c7b-2bmvt |1/1 |Running | 0 |1m|
   |node-backend-75655d54cc-lctlv | 1/1|  Running| 0 | 1m |
-    |vue-frontend-5c47cbd554-jtfsh | 1/1 | Running | 0 | 1m |
+  |vue-frontend-5c47cbd554-jtfsh | 1/1 | Running | 0 | 1m |
 
 3. You can tail the logs for the pods while running the application. Here is a sample command:
     *  `kubectl logs -f <pod-name>``
