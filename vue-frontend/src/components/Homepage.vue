@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       msg: 'test',
-      title: 'Made Using IBM One Cloud Services',
+      title: 'Made Using IBM One Cloud',
       title_sub_heading: 'Autonomous Watson Emergency Drone Assistants'
     }
   },

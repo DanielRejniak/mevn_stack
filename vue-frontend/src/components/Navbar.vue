@@ -4,7 +4,7 @@
       <br>
     <nav class="navbar is-transparent">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="https://bulma.io">
+                    <a class="navbar-item" href="#/homepage">
                         <img src="/static/logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
                             </a>
                     <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
@@ -18,9 +18,6 @@
                     <div class="navbar-start">
                         <a class="navbar-item" href="#/homepage">
                             Homepage
-                        </a>
-                        <a class="navbar-item" href="#/about">
-                            Team
                         </a>
                     </div>
                     

@@ -24,6 +24,8 @@ var location_names = [
     'LA Cypress'
 ];
 
+var summary_message = ['Are any of you severely injured?']
+
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/aweda-db';
 
@@ -54,9 +56,12 @@ exports.generateJSONReport = (req, res) => {
     //Generate random location index
     var random_location_index = Math.floor((Math.random() * 5) + 0);
 
-    console.log("Conversation : " + req.body.watson_assistant_conversation_log);
-    console.log("People Found : " + req.body.people_found);
-    console.log("Image Passed : " + req.body.image_provided);
+    //Filter Out Most Important Messages
+    for(var i = 0; i < req.body.watson_assistant_conversation_log.lenght; i++) {
+        for(var x = 0; x < summary_message.length; x++) {
+            console.log("Recorded : " + req.body.watson_assistant_conversation_log[i]);
+        }
+    }
 
     let report = new Report({
         watson_assistant_chat_log: req.body.watson_assistant_conversation_log,
@@ -74,8 +79,7 @@ exports.generateJSONReport = (req, res) => {
             res.status(201).json({
                 message: 'Report created Successfully'
             });
-        }
-        
+        } 
     });
 };
 
@@ -93,7 +97,19 @@ exports.clearReports = (req,res) => {
             res.status(500).send(error)
         } else {
             res.status(201).json({
-                message: 'Report cleared Successfully'
+                message: 'Reports Cleared Successfully'
+            });
+        }
+    });
+};
+
+exports.clearReport = (req,res) => {
+    Report.findOneAndDelete({ _id: req.body.id }, function (err) {
+        if (err) {
+            return handleError(err);
+        } else {
+            res.status(201).json({
+                message: 'Report Cleared Successfully'
             });
         }
     });

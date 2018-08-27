@@ -39,15 +39,15 @@
     <p>Report : {{result.image_gps_location.label.text}}</p>
 
     <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
-      <p><span class="tag is-danger">High Priority</span></p>
+      <p><span class="tag is-danger">High priority</span></p>
     </div>
 
     <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
-      <p><span class="tag is-warning">Medium Priority</span></p>
+      <p><span class="tag is-warning">Medium priority</span></p>
     </div>
 
     <div v-if="result.image_provided == 'false'">
-      <p><span class="tag is-success">Low Priority</span></p>
+      <p><span class="tag is-success">Low priority</span></p>
     </div>
 
   </div>
@@ -62,38 +62,55 @@
 
         <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
           <span class="icon has-text-success"><i class="fas fa-2x fa-check-square"></i></span>
-          <p class="title is-4">Watson People Found</p>
+          <p class="title is-4">Watson found people</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
         <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
           <span class="icon has-text-warning"><i class="fas fa-2x fa-exclamation-triangle"></i></span>
-          <p class="title is-4">Watson Did Not Find People</p>
+          <p class="title is-4">Watson did not find people</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
         <div v-if="result.people_found == 'false' && result.image_provided == 'false'">
           <span class="icon has-text-danger"><i class="fas fa-2x has-text-danger"></i></span>
-          <p class="title is-4">No Image Provided</p>
+          <p class="title is-4">No image provided</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
       </div>
     </div>
     <div class="content">
-      <p><strong>How Many People Found : </strong>
-      <p><strong>Severely Injured : </strong>
-      <p><strong>Access To Water : </strong>
-      <p><strong>Current Danger In Vcinity : </strong>
-      <p><strong>What Is Needed : </strong>
-
-      
-      <hr>
-      <a @click="openReportModal(result.watson_assistant_chat_log)">View full conversation</a>
+      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Approximately how many people are with you?'">
+            <p><strong>How many people found : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+          </div>
+      </div>
+      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Are any of you severely injured?' || chat_item.message == 'Are you severely injured?'">
+            <p><strong>Severely injured : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+          </div>
+      </div>
+      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Do you have access to water that is safe to drink?'">
+            <p><strong>Access to safe drinking water : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+          </div>
+      </div>
+      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == ' Is there any danger present in your vicinity?'">
+            <p><strong>Current danger : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+          </div>
+      </div>
+      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'What do you need most in your current situation?'">
+            <p><strong>What is needed : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+          </div>
+      </div>
     </div>
   </div>
   <footer class="card-footer">
-    <a href="#" class="card-footer-item">Response Team Sent</a>
+    <a @click="openReportModal(result.watson_assistant_chat_log)" class="card-footer-item">View full conversation</a>
+    <a @click="clearReport(result)" class="card-footer-item">Response Team Sent</a>
   </footer>
 </div>
 
@@ -101,7 +118,7 @@
 </div> 
   </div>
 
-  <a class="button is-outline is-primary" @click="clearReports">Clear Reports</a>
+  <!-- <a class="button is-outline is-primary" @click="clearReports">Clear Reports</a> -->
 </div> 
 <br>
 <div class="modal is-active" v-show="showImageModal">
@@ -187,6 +204,22 @@ export default {
       axios.get(url)
       .then(response => {
         this.database_result = response
+        location.reload();
+      });
+    },
+    clearReport: function(result) {
+
+      let url =`http://localhost:3000/public/clearReport`
+
+      let data = {
+        id: result._id
+      }
+
+      console.log("Will Remove : " + result._id)
+
+      axios.post(url,data)
+        .then(response => {
+          location.reload();
       });
     }
   },

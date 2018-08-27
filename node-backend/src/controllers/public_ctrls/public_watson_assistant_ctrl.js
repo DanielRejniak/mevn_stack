@@ -34,8 +34,6 @@ exports.watsonAssistant = (req, res, next) => {
       params = params_with_context
     }
 
-    console.log(params)
-
     //Call Watson Assistant
     assistant.message(params,  function(err, response) {
         if (err)

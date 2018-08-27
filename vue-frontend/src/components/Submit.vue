@@ -23,7 +23,7 @@
                   </div>
                 <br>
                 <div v-if="image == null">
-                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue Without Image</a>
+                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue without image</a>
                 </div>
             </div>
               </div>
