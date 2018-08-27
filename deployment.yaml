@@ -17,6 +17,7 @@ spec:
       containers:
       - name: vue-frontend
         image: registry.eu-de.bluemix.net/aweda/vue-frontend:1
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
 ---
@@ -39,6 +40,7 @@ spec:
       containers:
       - name: node-backend
         image: registry.eu-de.bluemix.net/aweda/node-backend:1
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
 ---
