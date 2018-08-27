@@ -6,14 +6,14 @@
           <div v-if="processingResult == '' && waitingForImageProcessing == false && chatMessageQueue.length == 0">
           <div class="container">
             <br>
-            <hr>            
+            <hr>
             <div class="columns is-centered has-text-centered">
               <div class="column is-6">
                 <figure class="image is-5by4">
                     <img :src="imageUrl" @click="onPickFile">
                 </figure>
                 <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
-                
+
                 <br>
                 <div v-if="processingResult == '' && waitingForImageProcessing == false">
                   <div v-if="image != null">
@@ -31,7 +31,7 @@
           </div>
           </div>
           <div v-if="imageUrl != ''">
-            
+
             <div v-if="waitingForImageProcessing">
               <figure class="image is-2by2">
                   <img src="/static/ibm-watson.gif">
@@ -40,7 +40,7 @@
               <div v-if="processingResult != ''">
                   <div v-if="peopleFound == true">
                     <div class="notification has-text-centered">
-                      <strong>Watson Found People With Confidence Of {{imageRecognitionKeyClasses.score * 100 }}%</strong>
+                      <strong>Watson found people with the confidence of {{imageRecognitionKeyClasses.score * 100 }}% .</strong>
                     </div>
                     <hr>
 
@@ -67,7 +67,7 @@
                     </div>
                     <br>
                     <div v-if="chatMessageQueue.length != 0">
-                      <input v-on:keyup.enter="processWatsonAssistantData" class="input" type="text" placeholder="Ask Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
+                      <input v-on:keyup.enter="processWatsonAssistantData" class="input" type="text" placeholder="Ask Watson Assistant and press enter for a response." v-model="watsonAssistantChatInput">
                       <hr>
                       <a class="button is-outline is-primary has-text-centered" @click="generateReport">Generate Report</a>
                     </div>
@@ -75,7 +75,7 @@
                 <div v-if="peopleFound == false">
                   <hr>
                   <div class="notification has-text-centered">
-                      <strong>No People Found In The Image You Can Still Continue Conversation With Watson Assistant To Provide As Much Information As you Can</strong>
+                      <strong>No people were found in the image. You can still continue to provide as much information as you can to assist with the situation.</strong>
                     </div>
                     <hr>
                     <div v-if="chatMessageQueue.length == 0">
@@ -108,7 +108,7 @@
                <div v-if="imageProvided == false && chatMessageQueue.length != 0">
                  <hr>
                  <div class="notification has-text-centered">
-                      <strong>No Image Provided You Can Still Continue Conversation With Watson Assistant To Provide As Much Information As you Can</strong>
+                      <strong>No image was provided. You can still continue to provide as much information as you can to assist with the situation. </strong>
                     </div>
                     <hr>
                     <div v-if="chatMessageQueue.length == 0">
@@ -197,10 +197,17 @@ export default {
     },
     processImage() {
       this.waitingForImageProcessing = true
-      let url =`http://localhost:3000/public/watsonImageRecognition`
+      // TODO: This URL is currently hardcoded. The ip-address and port details
+      // will need to be configurable.
+
+      // URL for local build
+      //let url ='http://localhost:3000/public/watsonImageRecognition'
+
+      // URL for IBM Cloud build
+      let url ='http://159.122.175.35:31491/public/watsonImageRecognition'
 
       this.imageProvided = true
-      
+
       let data = {
         message: this.msg,
         imageBody: this.image,
@@ -249,7 +256,14 @@ export default {
           context: this.conversationContext
         }
 
-        let url =`http://localhost:3000/public/watsonAssistant`
+        // TODO: This URL is currently hardcoded. The ip-address and port details
+        // will need to be configurable.
+
+        // URL for local build
+        //let url ='http://localhost:3000/public/watsonAssistant'
+
+        // URL for IBM Cloud build
+        let url ='http://159.122.175.35:31491/public/watsonAssistant'
 
         console.log("Making Watson Assistant Request")
         console.log("Image Provided : " + this.imageProvided)
@@ -271,8 +285,15 @@ export default {
       location.reload();
     },
     generateReport: function() {
-        
-        let url =`http://localhost:3000/public/generateJSONReport`
+
+        // TODO: This URL is currently hardcoded. The ip-address and port details
+        // will need to be configurable.
+
+        // URL for local build
+        //let url ='http://localhost:3000/public/generateJSONReport'
+
+        // URL for IBM Cloud build
+        let url ='http://159.122.175.35:31491/public/generateJSONReport'
 
         var image_name_holder = ''
 
@@ -281,7 +302,7 @@ export default {
         } else {
           image_name_holder = this.image.name
         }
-        
+
         let data = {
           watson_assistant_conversation_log: this.chatMessageQueue,
           image_id: image_name_holder,
@@ -295,10 +316,10 @@ export default {
 
         axios.post(url, data)
         .then(response => {
-          alert("Thank You for submiting the report, the information was sent to our response team.")
+          alert("Thank You for submitting the report. The information was sent to our response team.")
           this.$router.replace('homepage')
         }).catch(e => {
-          alert("There Was A Problem, Please Resubmit The Report")
+          alert("There was a problem, please resubmit the report")
           this.$router.replace('homepage')
       })
     }

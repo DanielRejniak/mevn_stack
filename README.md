@@ -28,6 +28,15 @@ There are two sides to this application.
 
 1. Create your cluster ... TODO
 
+
+2. Create a namespace by executing the following command:  
+
+  * `kubectl create -f namespace-dev.json`
+
+Check whether the namespaces got created by executing the following command:
+
+  * `kubectl get namespaces --show-labels | grep name=aweda`
+
 2. Log in to your IBM Cloud account. If you have a federated ID, use ibmcloud login `--sso` to log in to the IBM Cloud CLI.
   * `ibmcloud login -a https://api.eu-de.bluemix.net`
   * `ibmcloud login -a https://api.eu-de.bluemix.net --sso`
@@ -70,9 +79,9 @@ Example output:
 
 TODO
 
-docker run -it registry.eu-de.bluemix.net/aweda/node-backend:1 /bin/bash
+http://159.122.175.35:30234
 
-cd src/controllers/public_ctrls
+
 
 
 ----
@@ -87,13 +96,16 @@ cd src/controllers/public_ctrls
   * `cd node-backend`
   * `npm install`
   * `docker build -t registry.eu-de.bluemix.net/aweda/node-backend:1 .`
-  * `docker push registry.eu-de.bluemix.net/aweda/node-backend:1`
 
   2.2. Build the vue-frontend image by running the following commands:
   * `cd ..`
   * `cd vue-frontend`
   * `npm install`
   * `docker build -t registry.eu-de.bluemix.net/aweda/vue-frontend:1 .`
+
+ 2.3. Push the images to the ibm cloud private registry
+  * `docker image ls` - list the images built locally
+  * `docker push registry.eu-de.bluemix.net/aweda/node-backend:1`
   * `docker push registry.eu-de.bluemix.net/aweda/vue-frontend:1`
 
 3. Verify that your images are in your private registry.
@@ -166,7 +178,8 @@ Tail the logs for the new node-backend pod createReadStream
 
 1. Open a browser and enter the following URI:   
 
-  * `http://<container-id>/<vue-frontend-dns-port-number>``
+  * `http://<container-id>/<vue-frontend-dns-port-number>`
+  * `http://159.122.175.35:30234`
 
 ----
 
@@ -181,6 +194,16 @@ When you are finished using the application, it is always good to remove the app
   * `ibmcloud cr image-rm registry.eu-de.bluemix.net/aweda/node-backend:1`
   * `ibmcloud cr image-rm registry.eu-de.bluemix.net/aweda/vue-frontend:1`
   * `ibmcloud cr image-list`
+
+3. Remove the namespace
+
+kubectl get namespaces
+kubectl get namespaces --show-labels
+
+# Delete dev namespace
+kubectl delete namespaces dev
+
+4. Remove the cluster  
 
 3. Remove the images not being used on your local machine
   * `docker system prune -a`
