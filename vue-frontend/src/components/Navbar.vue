@@ -19,9 +19,6 @@
                         <a class="navbar-item" href="#/homepage">
                             Homepage
                         </a>
-                        <a class="navbar-item" href="#/about">
-                            Team
-                        </a>
                     </div>
                     
                     <div class="navbar-end">

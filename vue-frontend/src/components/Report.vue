@@ -39,15 +39,15 @@
     <p>Report : {{result.image_gps_location.label.text}}</p>
 
     <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
-      <p><span class="tag is-danger">High Priority</span></p>
+      <p><span class="tag is-danger">High priority</span></p>
     </div>
 
     <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
-      <p><span class="tag is-warning">Medium Priority</span></p>
+      <p><span class="tag is-warning">Medium priority</span></p>
     </div>
 
     <div v-if="result.image_provided == 'false'">
-      <p><span class="tag is-success">Low Priority</span></p>
+      <p><span class="tag is-success">Low priority</span></p>
     </div>
 
   </div>
@@ -62,19 +62,19 @@
 
         <div v-if="result.people_found == 'true' && result.image_provided == 'true'">
           <span class="icon has-text-success"><i class="fas fa-2x fa-check-square"></i></span>
-          <p class="title is-4">Watson People Found</p>
+          <p class="title is-4">Watson found people</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
         <div v-if="result.people_found == 'false' && result.image_provided == 'true'">
           <span class="icon has-text-warning"><i class="fas fa-2x fa-exclamation-triangle"></i></span>
-          <p class="title is-4">Watson Did Not Find People</p>
+          <p class="title is-4">Watson did not find people</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
         <div v-if="result.people_found == 'false' && result.image_provided == 'false'">
           <span class="icon has-text-danger"><i class="fas fa-2x has-text-danger"></i></span>
-          <p class="title is-4">No Image Provided</p>
+          <p class="title is-4">No image provided</p>
           <p class="subtitle is-6"><strong>Location : </strong>{{result.location_name}}</p>
         </div>
 
