@@ -2,7 +2,7 @@ const bodyParser = require("body-parser");
 const fs = require('fs');
 var mongoose = require('mongoose');
 
-/* Location prvided are temporary, usaly a GPS coordinate would come from a mobile 
+/* Location prvided are temporary, usaly a GPS coordinate would come from a mobile
 device or a drone. In our case we need to provide a list of GPS cordinates for
 the application to choose from. */
 
@@ -27,7 +27,7 @@ var location_names = [
 var summary_message = ['Are any of you severely injured?']
 
 // MongoDB URL from the docker-compose file
-const dbHost = 'mongodb://database/aweda-db';
+const dbHost = 'mongodb://mongo-db/aweda-db';
 
 // Connect to mongodb
 mongoose.connect(dbHost, function(err) {
@@ -47,7 +47,7 @@ const reportSchema = new mongoose.Schema({
     people_found: String,
     image_provided: String
   });
-  
+
   // Create Mongoose Model
   const Report = mongoose.model('Report', reportSchema);
 
@@ -79,7 +79,7 @@ exports.generateJSONReport = (req, res) => {
             res.status(201).json({
                 message: 'Report created Successfully'
             });
-        } 
+        }
     });
 };
 

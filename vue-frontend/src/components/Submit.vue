@@ -23,7 +23,7 @@
                   </div>
                 <br>
                 <div v-if="image == null">
-                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue without image</a>
+                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue Without Image</a>
                 </div>
             </div>
               </div>
@@ -215,7 +215,7 @@ export default {
         threshold: this.value
       }
 
-      console.log("Making Image Processing Request")
+      console.log("Making the image processing request to the backend. ")
       console.log(data)
 
       axios.post(url, data)
@@ -316,7 +316,7 @@ export default {
 
         axios.post(url, data)
         .then(response => {
-          alert("Thank You for submitting the report. The information was sent to our response team.")
+          alert("Thank you for submitting the report. The information was sent to our response team.")
           this.$router.replace('homepage')
         }).catch(e => {
           alert("There was a problem, please resubmit the report")

@@ -55,7 +55,7 @@ Alternatively, you may directly download your kubeconfig files to manually confi
 6. Verify that you can connect to your cluster by listing your worker nodes.
   * `kubectl get nodes`
 
-----
+---- TODO : Move after deployment section 
 ## 3.2 Exposing the services
 Kubernetes offers a DNS cluster add-on Service that automatically assigns dns names to other Services so you can talk to the Service from any pod in your cluster.
 
@@ -64,12 +64,13 @@ In the application, we need to expose the vue-frontend and the node-backend serv
 
   * `kubectl expose deployment vue-frontend --type=NodePort --name=vue-frontend-dns`
   * `kubectl expose deployment node-backend --type=NodePort --name=node-backend-dns`
+  * `kubectl expose deployment mongo-db --type=NodePort --name=mongo-db-dns`
 
 ### 3.2.2 Getting the Services
 You can view the ports which are exposed for the services.  
   * `kubectl get services`
 
-Example output:
+Example output: TODO create a table
   * vue-frontend NodePort 172.21.140.193 <none> 8000:`30234`/TCP 15s
     * The port `30234` will be used instead of `8000` inside the container. You will combine that with the IP-Address of the Cluster. e.g. `http://<cluster-id>:30234` after the application is deployed to the cluster.
   * node-backend NodePort 172.21.140.193 <none> 3000:`31491`/TCP 15s
@@ -105,6 +106,8 @@ http://159.122.175.35:30234
 
  2.3. Push the images to the ibm cloud private registry
   * `docker image ls` - list the images built locally
+  * `ibmcloud cr image-list` - List the images pushed to the IBM Cloud Registry
+
   * `docker push registry.eu-de.bluemix.net/aweda/node-backend:1`
   * `docker push registry.eu-de.bluemix.net/aweda/vue-frontend:1`
 
@@ -171,6 +174,12 @@ Tail the logs for the new node-backend pod createReadStream
     * `apt-get update`
     * `apt-get install vim`
     * Enter `y`
+
+3.
+cd src/components
+vi Submit.Vue
+:155
+
 
 ----
 

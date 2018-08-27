@@ -6,14 +6,14 @@ services:
     ports:
       - "3000:3000"
     links:
-      - database
-  
+      - mongo-db
+
   vue-frontend:
     build: vue-frontend
     ports:
       - "8000:8000"
 
-  database:
+  mongo-db:
     image: mongo:latest
     ports:
     - "27017:27017"
