@@ -133,7 +133,7 @@ You can do that by running the following commands:
   * `kubectl expose deployment node-backend --type=NodePort --name=node-backend-dns`
   * `kubectl expose deployment mongo-db --type=NodePort --name=mongo-db-dns`
 
-### 3.2.2 Getting the Services
+### 3.4.2 Getting the Services
 You can view the ports which are exposed for the services.  
   * `kubectl get services`
 
@@ -146,7 +146,7 @@ Example output:
 |vue-frontend-dns |NodePort |172.21.140.193 | <none> |8000:30234/TCP| 7m|
 
 ----
-### 3.4.2 Update the vue-frontend files
+### 3.4.3 Update the vue-frontend files
 
 There are two files which require for the global variables to be updated to point to the IBM Cloud configurations.
 
@@ -164,7 +164,7 @@ There are two files which require for the global variables to be updated to poin
       * e.g. `endpoint_port : '31491'`
 
 ----
-### 3.4.3 Build the vue-frontend files changes and push to the registry
+### 3.4.4 Build the vue-frontend files changes and push to the registry
 
 1. Build the vue-frontend image by running the following commands:
 
@@ -175,12 +175,12 @@ There are two files which require for the global variables to be updated to poin
 
 * `docker push registry.eu-de.bluemix.net/aweda/vue-frontend:1`
 ----
-### 3.4.4 Re-deploy the application
+### 3.4.5 Re-deploy the application
 Re-deploy the application to take down the latest changes. Note the deployment.yaml file specified the `imagePullPolicy: Always` therefore it will always take down the latest changes.
 
   * `kubectl apply -f deployment.yaml`
 ----
-### 3.4.5 Known Issue - Database not connecting to node-backend on initial deployment.
+### 3.4.6 Known Issue - Database not connecting to node-backend on initial deployment.
 
 To resolve this issue, you just need to delete the pod and it will be recreated. When it is recreated, if you tail the logs you will now see that the database is connected successfully.
 
