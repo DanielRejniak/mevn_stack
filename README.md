@@ -100,7 +100,7 @@ Here is an example output:
   |vue-frontend-5c47cbd554-jtfsh | 1/1 | Running | 0 | 1m |
 
 3. You can tail the logs for the pods while running the application. Here is a sample command:
-    *  `kubectl logs -f <pod-name>``
+    *  `kubectl logs -f <pod-name>`
 
 4. Check the deployments
     * `kubectl get deployments`
