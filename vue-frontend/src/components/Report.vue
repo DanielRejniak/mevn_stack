@@ -123,19 +123,19 @@
 </div>
 
 
-</div> 
+</div>
   </div>
 
   <!-- <a class="button is-outline is-primary" @click="clearReports">Clear Reports</a> -->
-</div> 
+</div>
 <br>
 <div class="modal is-active" v-show="showImageModal">
   <div class="modal-background"></div>
   <div class="modal-content">
     <p class="image is-4by3">
       <img :src="/static/ + currentSelectedImageId" alt="">
-      
-      
+
+
     </p>
   </div>
   <button class="modal-close is-large" aria-label="close" @click="closeImageModal"></button>
@@ -184,7 +184,11 @@ export default {
       currentSelectedChatLog: [],
       currentSelectedImageId: '',
       peopleFound: 'not_available',
-      reportPriority: 'low'
+      reportPriority: 'low',
+      endpoint_hostname: 'localhost',
+      endpoint_port: '3000'
+      //endpoint_hostname: '159.122.175.35',
+      //endpoint_port: '31491'
     }
   },
   methods: {
@@ -208,7 +212,8 @@ export default {
       this.currentSelectedChatLog = chatLog
     },
     clearReports: function() {
-      let url =`http://localhost:3000/public/clearReports`
+      let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/clearReports'
+
       axios.get(url)
       .then(response => {
         this.database_result = response
@@ -216,8 +221,7 @@ export default {
       });
     },
     clearReport: function(result) {
-
-      let url =`http://localhost:3000/public/clearReport`
+    let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/clearReports'
 
       let data = {
         id: result._id
@@ -232,19 +236,20 @@ export default {
     }
   },
   created() {
-    let url =`http://localhost:3000/public/retrieveReports`
+    let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/retrieveReports'
+
     axios.get(url)
       .then(response => {
         this.database_results = response.data
 
         for(var i = 0; i < this.database_results.length; i++) {
 
-          let location = { 
-            position: { 
-              lat: this.database_results[i].image_gps_location.position.lat, 
-              lng: this.database_results[i].image_gps_location.position.lng 
+          let location = {
+            position: {
+              lat: this.database_results[i].image_gps_location.position.lat,
+              lng: this.database_results[i].image_gps_location.position.lng
             },
-            label: { 
+            label: {
               text: this.database_results[i].image_gps_location.label.text
             }
           }
@@ -252,8 +257,6 @@ export default {
           this.markers.push(location)
         }
       });
-
-    
   }
 }
 </script>
