@@ -178,10 +178,23 @@ There are two files which require for the global variables to be updated to poin
 ### 3.4.4 Re-deploy the application
 Re-deploy the application to take down the latest changes. Note the deployment.yaml file specified the `imagePullPolicy: Always` therefore it will always take down the latest changes.
 
-****NOTE to Daniel ***
-Do you have to run remove deployment first before or can you just run the following command. I always deleted it beforehand so can you test this.
-
   * `kubectl apply -f deployment.yaml`
+----
+### 3.4.5 Known Issue - Database not connecting to node-backend on initial deployment.
+
+To resolve this issue, you just need to delete the pod and it will be recreated. When it is recreated, if you tail the logs you will now see that the database is connected successfully.
+
+Tail the logs for the node-backend pod
+    * `kubectl get pods`  
+    * `kubectl logs -f <node-backend-pod-id>`
+
+Delete the pod
+    * `kubectl delete pod <node-backend-pod-id>`
+    * `kubectl get pods`
+
+Tail the logs for the new node-backend pod createReadStream
+    * `kubectl logs -f <node-backend-pod-id>`
+
 ----
 # 4. Running the application
 
