@@ -81,36 +81,44 @@
       </div>
     </div>
     <div class="content">
-      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
-          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Approximately how many people are with you?'">
-            <p><strong>How many people found : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
-          </div>
-      </div>
-      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
-          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Are any of you severely injured?' || chat_item.message == 'Are you severely injured?'">
-            <p><strong>Severely injured : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
-          </div>
-      </div>
-      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
-          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Do you have access to water that is safe to drink?'">
-            <p><strong>Access to safe drinking water : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
-          </div>
-      </div>
-      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
-          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == ' Is there any danger present in your vicinity?'">
-            <p><strong>Current danger : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
-          </div>
-      </div>
-      <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
-          <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'What do you need most in your current situation?'">
-            <p><strong>What is needed : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
-          </div>
-      </div>
+      <div v-if="result.watson_assistant_chat_log.length > 1">
+        <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+            <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Approximately how many people are with you?'">
+              <p><strong>How many people found : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+            </div>
+        </div>
+        <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+            <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Are any of you severely injured?' || chat_item.message == 'Are you severely injured?'">
+              <p><strong>Severely injured : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+            </div>
+        </div>
+        <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+            <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'Do you have access to water that is safe to drink?'">
+              <p><strong>Access to safe drinking water : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+            </div>
+        </div>
+        <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+            <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == ' Is there any danger present in your vicinity?'">
+              <p><strong>Current danger : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+            </div>
+        </div>
+        <div v-for="(chat_item, index) in result.watson_assistant_chat_log" :key="index">
+            <div v-if="chat_item.sender == 'Watson Assistant' && chat_item.message == 'What do you need most in your current situation?'">
+              <p><strong>What is needed : </strong> {{result.watson_assistant_chat_log[index+1].message}}</p>
+            </div>
+        </div>
+        </div>
+      <label class="checkbox">
+          Response team alerted
+          <input type="checkbox">
+        </label>
     </div>
   </div>
   <footer class="card-footer">
-    <a @click="openReportModal(result.watson_assistant_chat_log)" class="card-footer-item">View full conversation</a>
-    <a @click="clearReport(result)" class="card-footer-item">Response Team Sent</a>
+     <a class="card-footer-item" @click="openReportModal(result.watson_assistant_chat_log)" v-if="result.watson_assistant_chat_log.length > 1">
+       View full conversation
+     </a>
+    <a @click="clearReport(result)" class="card-footer-item">Clear Report</a>
   </footer>
 </div>
 

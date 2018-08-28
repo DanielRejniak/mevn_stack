@@ -12,18 +12,25 @@
                 <figure class="image is-5by4">
                     <img :src="imageUrl" @click="onPickFile">
                 </figure>
+                <div v-if="image == null">
+                  <small>Click the placeholder to upload an image</small>
+                </div>
                 <input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
 
                 <br>
                 <div v-if="processingResult == '' && waitingForImageProcessing == false">
                   <div v-if="image != null">
                     <VueSlideBar v-model="value"/>
+
+                      <small>Slider to adjust image recognition threshold</small>
+
                     <br>
+                    <hr>
                     <a class="button is-outline is-rounded is-fullwidth" @click="processImage">Submit Image</a>
                   </div>
                 <br>
                 <div v-if="image == null">
-                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue without image</a>
+                  <a class="button is-outline is-rounded is-fullwidth" @click="processWatsonAssistantData(false)">Continue without Image</a>
                 </div>
             </div>
               </div>
@@ -40,14 +47,15 @@
               <div v-if="processingResult != ''">
                   <div v-if="peopleFound == true">
                     <div class="notification has-text-centered">
-                      <strong>Watson found people with the confidence of {{imageRecognitionKeyClasses.score * 100 }}% .</strong>
+                      <strong>Watson found people</strong>
+                      <small>{{imageRecognitionKeyClasses.score * 100 }}% confident</small>
                     </div>
                     <hr>
 
                     <div v-if="chatMessageQueue.length == 0">
-                      <a class="button is-outline is-primary is-fullwidth" @click="processWatsonAssistantData(true)">Interact With Watson Assistant</a>
+                      <a class="button is-outline is-primary is-fullwidth" @click="processWatsonAssistantData(true)">Interact with Watson Assistant</a>
                       <br>
-                      <a class="button is-outline is-primary is-fullwidth" @click="generateReport">Generate Report Without Watson Assistant Conversation</a>
+                      <a class="button is-outline is-primary is-fullwidth" @click="generateReport">Submit report without Watson Assistant</a>
                     </div>
                     <div v-for="answer in chatMessageQueue">
                       <div v-if="answer.sender == 'Watson Assistant'">
@@ -75,7 +83,7 @@
                 <div v-if="peopleFound == false">
                   <hr>
                   <div class="notification has-text-centered">
-                      <strong>No people were found in the image. You can still continue to provide as much information as you can to assist with the situation.</strong>
+                      <strong>Watson didnt find any people in the image. You can still continue to provide further information as you can to assist with the situation.</strong>
                     </div>
                     <hr>
                     <div v-if="chatMessageQueue.length == 0">
@@ -108,7 +116,7 @@
                <div v-if="imageProvided == false && chatMessageQueue.length != 0">
                  <hr>
                  <div class="notification has-text-centered">
-                      <strong>No image was provided. You can still continue to provide as much information as you can to assist with the situation. </strong>
+                      <strong>No image was provided. You can continue, or </strong><a @click="$router.go(-1)">re-upload</a><strong> the image to provide as much information as possible. </strong>
                     </div>
                     <hr>
                     <div v-if="chatMessageQueue.length == 0">
@@ -131,10 +139,12 @@
                       </div>
                     </div>
                     <br>
-                    <div v-if="chatMessageQueue.length != 0">
+                    <div v-if="chatMessageQueue.length != 0 && finishedConversation == false">
                       <input v-on:keyup.enter="processWatsonAssistantData(false)" class="input" type="text" placeholder="Ask Watson Assistant And Press Enter For Response" v-model="watsonAssistantChatInput">
+                    </div>
+                    <div v-if="chatMessageQueue.length != 0">
                       <hr>
-                      <a class="button is-outline is-primary has-text-centered" @click="generateReport">Generate Report</a>
+                        <a class="button is-outline is-rounded has-text-centered" @click="generateReport">Generate Report</a>
                     </div>
               </div>
           </div>
@@ -173,7 +183,13 @@ export default {
       watsonAssistantChatInput: '',
       waitingForImageProcessing: false,
       imageProvided: false,
-      conversationContext: ''
+      conversationContext: '',
+      finishedConversation: false,
+      endpoint_hostname: 'localhost',
+      endpoint_port: '3000'
+      //endpoint_hostname: '159.122.175.35',
+      //endpoint_port: '31491'
+
     }
   },
   methods: {
@@ -197,14 +213,9 @@ export default {
     },
     processImage() {
       this.waitingForImageProcessing = true
-      // TODO: This URL is currently hardcoded. The ip-address and port details
-      // will need to be configurable.
 
-      // URL for local build
-      //let url ='http://localhost:3000/public/watsonImageRecognition'
-
-      // URL for IBM Cloud build
-      let url ='http://159.122.175.35:31491/public/watsonImageRecognition'
+      // URL for backend watson image recognition API
+      let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/watsonImageRecognition'
 
       this.imageProvided = true
 
@@ -256,24 +267,21 @@ export default {
           context: this.conversationContext
         }
 
-        // TODO: This URL is currently hardcoded. The ip-address and port details
-        // will need to be configurable.
-
-        // URL for local build
-        //let url ='http://localhost:3000/public/watsonAssistant'
-
-        // URL for IBM Cloud build
-        let url ='http://159.122.175.35:31491/public/watsonAssistant'
+        // URL for backend watson assistant 
+        let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/watsonAssistant'
 
         console.log("Making Watson Assistant Request")
-        console.log("Image Provided : " + this.imageProvided)
-        console.log("People Found : " + this.peopleFound)
 
         axios.post(url, data)
         .then(response => {
           this.chatMessageQueue.push(response.data)
           this.watsonAssistantChatInput = ''
           this.conversationContext = response.data.context
+
+          if(response.data.message == 'I will go away now, but I will come back to you as soon as I have information about your rescue') {
+            this.finishedConversation = true
+          }
+
         });
     },
     logout: function() {
@@ -286,14 +294,8 @@ export default {
     },
     generateReport: function() {
 
-        // TODO: This URL is currently hardcoded. The ip-address and port details
-        // will need to be configurable.
-
-        // URL for local build
-        //let url ='http://localhost:3000/public/generateJSONReport'
-
-        // URL for IBM Cloud build
-        let url ='http://159.122.175.35:31491/public/generateJSONReport'
+        // URL for backend JSON report generator
+        let url ='http://'+this.endpoint_hostname+':'+this.endpoint_port+'/public/generateJSONReport'
 
         var image_name_holder = ''
 
@@ -316,7 +318,7 @@ export default {
 
         axios.post(url, data)
         .then(response => {
-          alert("Thank You for submitting the report. The information was sent to our response team.")
+          alert("Thank you for submitting the report. The information was sent to the response team.")
           this.$router.replace('homepage')
         }).catch(e => {
           alert("There was a problem, please resubmit the report")

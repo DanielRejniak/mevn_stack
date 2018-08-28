@@ -16,9 +16,9 @@
                 
                 <div id="navbarExampleTransparentExample" class="navbar-menu">
                     <div class="navbar-start">
-                        <a class="navbar-item" href="#/homepage">
-                            Homepage
-                        </a>
+                            <a class="navbar-item" href="#/homepage" v-show="!is_loggedin">
+                                Homepage
+                            </a>
                     </div>
                     
                     <div class="navbar-end">

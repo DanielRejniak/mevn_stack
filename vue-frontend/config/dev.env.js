@@ -8,5 +8,7 @@ module.exports = merge(prodEnv, {
   DATABASE_URL: '"https://test-project-e0286.firebaseio.com"',
   PROJECT_ID: '"test-project-e0286"',
   STORAGE_BUCKET: '"test-project-e0286.appspot.com"',
-  MESSAGEING_SENDER_ID: '"404909952400"'
+  MESSAGEING_SENDER_ID: '"404909952400"',
+  BECKEND_HOSTNAME: 'localhost',
+  BACKEND_PORT: 'localhost'
 })
