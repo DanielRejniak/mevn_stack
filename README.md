@@ -1,3 +1,7 @@
+# Pre required tools for IBM Cloud:
+1. CLI https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started 
+2. Kubernetes https://kubernetes.io/docs/user-guide/prereqs/
+3. Docker https://docs.docker.com/docker-for-mac/
 
 # Getting started
 ----
